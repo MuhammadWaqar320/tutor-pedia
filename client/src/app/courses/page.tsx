@@ -1,11 +1,11 @@
 import Image from 'next/image';
 
-const Home=()=> {
+const Courses=()=> {
   return (
     <main>
-      <div>hello</div>
+      <div>course</div>
     </main>
   )
 }
 
-export default Home;
+export default Courses;

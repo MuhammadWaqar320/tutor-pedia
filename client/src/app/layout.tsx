@@ -1,7 +1,12 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import "bootstrap/dist/css/bootstrap.min.css";
 import "./globals.css";
 import Header from "@/components/Header";
+import StyledComponentsRegistry from "./registry";
+import { GoogleOAuthProvider } from "@react-oauth/google";
+import { ApolloWrapper } from "./gqlConfig/ApolloWrapper";
+
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -13,9 +18,16 @@ export const metadata: Metadata = {
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <Header/>
-        {children}</body>
+      <body className={inter.className} suppressHydrationWarning={true}>
+        <ApolloWrapper>
+        <GoogleOAuthProvider clientId={process.env.GOOGLE_CLIENT_API_ID ?? ""}>
+          <StyledComponentsRegistry>
+            <Header />
+            <div>{children}</div>
+          </StyledComponentsRegistry>
+        </GoogleOAuthProvider>
+        </ApolloWrapper>
+      </body>
     </html>
   );
 };

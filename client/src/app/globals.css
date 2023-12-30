@@ -5,3 +5,6 @@ body {
   margin: 0;
   padding: 0;
 }
+:root{
+  --header-bg-color:#002D5F;
+}
