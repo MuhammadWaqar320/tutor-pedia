@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const HeaderContainer = styled.div`
+const HeaderContainer = styled.header`
 & .header-menu-item{
   color:white;
   text-decoration:none;

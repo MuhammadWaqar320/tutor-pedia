@@ -11,27 +11,16 @@ import {
   getUserByIdResolver,
   createUserResolver,
   AuthResolver,
-} from "../resolvers/gqlResolver";
-// GraphQL types
-const UserType = new GraphQLObjectType({
-  name: "User",
-  fields: () => {
-    return {
-      id: { type: GraphQLID },
-      username: { type: GraphQLString },
-      email: { type: GraphQLString },
-      password: { type: GraphQLString },
-      phoneNo: { type: GraphQLString },
-    };
-  },
-});
-// GraphQL Query
+} from "../resolvers/userResolver";
+import { UserRoleEnum } from "../types/EnumTypes";
+import { UserType,AuthType,ResponseType } from "../types/UserTypes";
 
+// GraphQL Query
 const query = new GraphQLObjectType({
   name: "Query",
   fields: {
     getAllUser: {
-      type: new GraphQLList(UserType),
+      type: ResponseType,
       resolve: getAllUserResolver,
     },
     getUserById: {
@@ -43,22 +32,23 @@ const query = new GraphQLObjectType({
 });
 
 //GraphQL Mutation
-
 const mutation = new GraphQLObjectType({
   name: "Mutation",
   fields: {
     createUser: {
-      type: UserType,
+      type: ResponseType,
       args: {
-        username: { type: new GraphQLNonNull(GraphQLString) },
+        firstName: { type: new GraphQLNonNull(GraphQLString) },
+        lastName: { type: new GraphQLNonNull(GraphQLString) },
         email: { type: new GraphQLNonNull(GraphQLString) },
         password: { type: new GraphQLNonNull(GraphQLString) },
         phoneNo: { type: new GraphQLNonNull(GraphQLString) },
+        role: { type: new GraphQLNonNull(UserRoleEnum) },
       },
       resolve: createUserResolver,
     },
-    login: {
-      type: UserType,
+    Auth: {
+      type: AuthType,
       args: {
         email: { type: new GraphQLNonNull(GraphQLString) },
         password: { type: new GraphQLNonNull(GraphQLString) },

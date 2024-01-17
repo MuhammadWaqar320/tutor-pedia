@@ -6,6 +6,7 @@ import Header from "@/components/Header";
 import StyledComponentsRegistry from "./registry";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { ApolloWrapper } from "./gqlConfig/ApolloWrapper";
+import Footer from "@/components/Footer";
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -23,7 +24,8 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
         <GoogleOAuthProvider clientId={process.env.GOOGLE_CLIENT_API_ID ?? ""}>
           <StyledComponentsRegistry>
             <Header />
-            <div>{children}</div>
+            <div style={{minHeight:"500px"}}>{children}</div>
+            <Footer/>
           </StyledComponentsRegistry>
         </GoogleOAuthProvider>
         </ApolloWrapper>
