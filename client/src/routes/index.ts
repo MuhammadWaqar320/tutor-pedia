@@ -5,7 +5,15 @@ export const appRoute = {
     SIGN_UP: "/signUp",
     HOME: "/",
   },
-  ADMIN_DASHBOARD_ROUTES: {},
-  TEACHER_DASHBOARD_ROUTES: {},
-  STUDENT_DASHBOARD_ROUTES: {},
+  DASHBOARDS:{
+    STUDENT:{DASHBOARD:"/dashboards/student",
+    COURSES:"/dashboards/student/courses"
+  },
+    TEACHER:{
+      DASHBOARD:"/dashboards/teacher"
+    },
+    ADMIN:{
+      DASHBOARD:"/dashboards/admin"
+    }
+  }
 };

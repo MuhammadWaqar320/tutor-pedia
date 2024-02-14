@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./globals.css";
-import Header from "@/components/Header";
 import StyledComponentsRegistry from "./registry";
-import { GoogleOAuthProvider } from "@react-oauth/google";
-import { ApolloWrapper } from "./gqlConfig/ApolloWrapper";
-
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { AppContextProvider } from "@/context/appContextProvider";
+import NextTopLoader from 'nextjs-toploader';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,14 +19,13 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="en">
       <body className={inter.className} suppressHydrationWarning={true}>
-        <ApolloWrapper>
-        <GoogleOAuthProvider clientId={process.env.GOOGLE_CLIENT_API_ID ?? ""}>
+        <AppContextProvider>
           <StyledComponentsRegistry>
-            <Header />
-            <div>{children}</div>
+            <NextTopLoader  color="skyblue"   height={4}   showSpinner={false} />
+            <div style={{ minHeight: "500px" }}>{children}</div>
           </StyledComponentsRegistry>
-        </GoogleOAuthProvider>
-        </ApolloWrapper>
+        </AppContextProvider>
+        <ToastContainer />
       </body>
     </html>
   );
