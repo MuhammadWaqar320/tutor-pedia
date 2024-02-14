@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserType = exports.AuthType = exports.LoggedInUserType = exports.ResponseType = exports.DataType = void 0;
+exports.UserType = exports.AuthPayloadType = exports.LoggedInUserType = exports.ResponseType = exports.DataType = void 0;
 const graphql_1 = require("graphql");
 const EnumTypes_1 = require("./EnumTypes");
 exports.DataType = new graphql_1.GraphQLScalarType({
@@ -17,7 +17,7 @@ exports.DataType = new graphql_1.GraphQLScalarType({
     },
 });
 exports.ResponseType = new graphql_1.GraphQLObjectType({
-    name: "response_type",
+    name: "responseType",
     fields: () => {
         return {
             code: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) },
@@ -35,10 +35,12 @@ exports.LoggedInUserType = new graphql_1.GraphQLObjectType({
             firstName: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) },
             lastName: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) },
             role: { type: new graphql_1.GraphQLNonNull(EnumTypes_1.UserRoleEnum) },
+            email: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) },
+            profileUrl: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) },
         };
     },
 });
-exports.AuthType = new graphql_1.GraphQLObjectType({
+exports.AuthPayloadType = new graphql_1.GraphQLObjectType({
     name: "auth",
     fields: () => {
         return {
@@ -62,6 +64,7 @@ exports.UserType = new graphql_1.GraphQLObjectType({
             role: { type: new graphql_1.GraphQLNonNull(EnumTypes_1.UserRoleEnum) },
             createdAt: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLInt) },
             updatedAt: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLInt) },
+            profileUrl: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) },
         };
     },
 });

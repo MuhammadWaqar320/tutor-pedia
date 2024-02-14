@@ -4,10 +4,14 @@ import { SignUpContainer } from "@/styles/signUp.style";
 import Grid from "@mui/material/Grid";
 import SignUpForm from "@/components/SignUpForm";
 import Image from "next/image";
+import Header from "@/components/Header";
 import { style } from "@/styles/modal.style";
 
 const SignUp = () => {
+
   return (
+    <>
+     <Header />
     <SignUpContainer>
       <Grid container className="sign-up-content-container">
         <Grid
@@ -21,6 +25,7 @@ const SignUp = () => {
         </Grid>
       </Grid>
     </SignUpContainer>
+    </>
   );
 };
 

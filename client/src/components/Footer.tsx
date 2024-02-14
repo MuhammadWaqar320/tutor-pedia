@@ -14,6 +14,10 @@ import {
   LinkedinShareButton,
   WhatsappShareButton,
 } from "react-share";
+import InfoIcon from "@mui/icons-material/Info";
+import ListAltIcon from "@mui/icons-material/ListAlt";
+import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
+import LanguageIcon from "@mui/icons-material/Language";
 
 
 function Footer() {
@@ -33,7 +37,7 @@ function Footer() {
                 className="rounded-full"
                 alt="footer-logo"
               />
-  <h4>Tutor Pedia</h4>
+  <h4 style={{color:"yellow"}}>Tutor Pedia</h4>
               </div>
             
               <p className="website-info">
@@ -47,25 +51,25 @@ function Footer() {
               </p>
             </Grid>
             <Grid item xs={6} md={2} className="quick-links">
-              <h6>Quick Links</h6>
+              <h6 style={{color:"yellow"}}>Quick Links</h6>
               <div className="quick-links-list">
-                <ul>
-                  <li>About Us</li>
-                  <li>Contact Us</li>
+                <ul >
+                  <li className="footer-list"> <InfoIcon fontSize="small" /> <span style={{marginLeft:"5px"}}> About Us</span></li>
+                  <li className="footer-list"> <ListAltIcon fontSize="small" /> <span style={{marginLeft:"5px"}}> All Courses</span></li>
                 </ul>
               </div>
             </Grid>
             <Grid item xs={6} md={2} className="contact-us">
-              <h6>Contact Us</h6>
+              <h6 style={{color:"yellow"}}>Contact Us</h6>
               <div className="contact-us-list">
-                <ul>
-                  <li>+051-23413344</li>
-                  <li>www.tutorpedia.com</li>
+                   <ul >
+                  <li className="footer-list"> <LocalPhoneIcon fontSize="small" /> <span style={{marginLeft:"5px"}}> +051-23413344</span></li>
+                  <li className="footer-list"> <LanguageIcon fontSize="small" /> <span style={{marginLeft:"5px"}}>www.tutorpedia.com</span></li>
                 </ul>
               </div>
             </Grid>
             <Grid item xs={6} md={2} className="follow-us">
-              <h6>Follow Us</h6>
+              <h6 style={{color:"yellow"}}>Follow Us</h6>
               <div className="follow-us-list">
                 <ul>
                   <li>

@@ -31,7 +31,10 @@ const UserSchema = new mongoose_1.default.Schema({
     },
     updatedAt: {
         type: Number
-    }
+    },
+    profileUrl: {
+        type: String,
+    },
 });
 const UserModel = mongoose_1.default.model("User", UserSchema);
 exports.default = UserModel;

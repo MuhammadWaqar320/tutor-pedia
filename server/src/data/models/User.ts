@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import { UserInterface } from "../../interfaces/User";
 import { UserRole } from "../../interfaces/User";
-import { Model, ModifyResult, IfAny, Document, Require_id } from "mongoose";
+import { Document } from "mongoose";
 
 const UserSchema = new mongoose.Schema({
   firstName: {
@@ -29,7 +29,10 @@ const UserSchema = new mongoose.Schema({
   },
   updatedAt:{
     type:Number
-  }
+  }, 
+  profileUrl: {
+    type: String,
+  },
 });
 
 const UserModel = mongoose.model<UserInterface & Document>("User", UserSchema);

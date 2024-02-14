@@ -8,20 +8,26 @@ import logo from "../../public/images/smallLogo.jpeg";
 import HowToRegIcon from "@mui/icons-material/HowToReg";
 import Link from "next/link";
 import { useFormik } from "formik";
-import { UserDataInterface } from "@/typesAndInterfaces/signUpForm.interface";
-import { UserRole } from "@/typesAndInterfaces/signUpForm.interface";
 import { validationSchema } from "@/validations/signUpFormValidationSchema";
-
+import { UserType, UserRole } from "@/api/user";
+import { createNewUser } from "@/api/user";
+import { toastSuccessMessage, toastErrMessage } from "@/utils/functions";
+import { gqlErrorCodes } from "@/utils/constant";
+import CircularProgress from '@mui/material/CircularProgress';
+import { uploadFileToFBStorageAndGetURL } from "@/api/common";
 
 const SignUpForm = () => {
-  const [userData, setUserData] = useState<UserDataInterface>({
+  const [userData, setUserData] = useState<UserType>({
     firstName: "",
     lastName: "",
     email: "",
     phoneNo: "",
     role: UserRole.Student,
     password: "",
+    profileUrl:""
   });
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [file, setFile] = useState<File | null>(null);
   const {
     errors,
     values,
@@ -32,8 +38,45 @@ const SignUpForm = () => {
   } = useFormik({
     initialValues: userData,
     validationSchema: validationSchema,
-    onSubmit: (values: UserDataInterface) => {
-      console.log("submit:", values);
+    onSubmit: async (values: UserType) => {
+      try {
+        setIsLoading(true);
+         const { url, success } = await uploadFileToFBStorageAndGetURL(
+      `userProfile/${Date.now()}${file?.name}`,
+      file
+    );
+
+    if(success){
+        const response = await createNewUser({...values,profileUrl:url});
+        
+      if (response?.success) {
+        setIsLoading(false);
+        setUserData({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phoneNo: "",
+    role: UserRole.Student,
+    password: "",
+    profileUrl:""
+  })
+          toastSuccessMessage("You have been registered successfully.");
+        } else if (
+          response?.code === gqlErrorCodes.alreadyExist &&
+          !response?.success
+        ) {
+          setIsLoading(false);
+           toastErrMessage("User is already exist.");
+      }
+    }else{
+       setIsLoading(false);
+         toastErrMessage("An error occurred while uploading your profile picture.");
+    }
+  
+      } catch (error) {
+        setIsLoading(false);
+        toastErrMessage("An error occurred while processing your request.");
+      }
     },
   });
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -50,6 +93,13 @@ const SignUpForm = () => {
     const { name, value } = e.currentTarget;
     setFieldValue(name, value);
     setFieldTouched(name, true, false);
+  };
+    const onChangeFile = (event: React.ChangeEvent) => {
+    const target = event.target as HTMLInputElement;
+    const file = target?.files?.[0];
+    if (file) {
+      setFile(file);
+    }
   };
 
   return (
@@ -156,13 +206,22 @@ const SignUpForm = () => {
           <option value={UserRole.Student}>Student</option>
         </Form.Select>
       </Form.Group>
+        <Form.Group as={Col} controlId="formGridName" className="mb-1.5">
+        <Form.Label className="mb-0.5">Upload profile picture:</Form.Label>
+        <Form.Control
+          type="file"
+          onChange={onChangeFile}
+          accept=".jpeg,.png,.jpg"
+          required
+        />
+      </Form.Group>
       <div
         style={{ display: "flex", justifyContent: "center", marginTop: "60px" }}
       >
         <Button
           variant="contained"
           type="submit"
-          startIcon={<HowToRegIcon />}
+          startIcon={isLoading?   <CircularProgress size={22} color="warning" />: <HowToRegIcon />}
           style={{
             background: "#002D5F",
             width: "300px",

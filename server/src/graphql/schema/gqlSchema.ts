@@ -10,17 +10,19 @@ import {
   getAllUserResolver,
   getUserByIdResolver,
   createUserResolver,
-  AuthResolver,
+  updateUserResolver,
+  deleteUser
 } from "../resolvers/userResolver";
+import { AuthResolver } from "../resolvers/authResolvers";
 import { UserRoleEnum } from "../types/EnumTypes";
-import { UserType,AuthType,ResponseType } from "../types/UserTypes";
+import { UserType,AuthPayloadType,ResponseType } from "../types/UserTypes";
 
 // GraphQL Query
 const query = new GraphQLObjectType({
   name: "Query",
   fields: {
     getAllUser: {
-      type: ResponseType,
+      type: new GraphQLList(UserType),
       resolve: getAllUserResolver,
     },
     getUserById: {
@@ -44,11 +46,33 @@ const mutation = new GraphQLObjectType({
         password: { type: new GraphQLNonNull(GraphQLString) },
         phoneNo: { type: new GraphQLNonNull(GraphQLString) },
         role: { type: new GraphQLNonNull(UserRoleEnum) },
+        profileUrl: { type: new GraphQLNonNull(GraphQLString) },
       },
       resolve: createUserResolver,
     },
-    Auth: {
-      type: AuthType,
+    updateUser: {
+      type: ResponseType,
+      args: {
+        id: { type: GraphQLID },
+        firstName: { type: GraphQLString },
+        lastName: { type: GraphQLString },
+        email: { type: GraphQLString },
+        password: { type: GraphQLString },
+        phoneNo: { type: GraphQLString },
+        role: { type: UserRoleEnum },
+        profileUrl:{ type: GraphQLString }
+      },
+      resolve: updateUserResolver,
+    },
+    deleteUser: {
+      type: ResponseType,
+      args: {
+        id: { type: GraphQLID },
+      },
+      resolve: deleteUser,
+    },
+    auth: {
+      type: AuthPayloadType,
       args: {
         email: { type: new GraphQLNonNull(GraphQLString) },
         password: { type: new GraphQLNonNull(GraphQLString) },
@@ -57,6 +81,7 @@ const mutation = new GraphQLObjectType({
     },
   },
 });
+
 
 // Creating Graphql schema
 const Schema = new GraphQLSchema({

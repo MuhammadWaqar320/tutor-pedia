@@ -4,19 +4,29 @@ import { LoginFormContainer } from "@/styles/loginForm.style";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Link from "next/link";
-import { GoogleLogin } from "@react-oauth/google";
-import { jwtDecode } from "jwt-decode";
 import { useFormik } from "formik";
 import Image from "next/image";
 import { validationSchema } from "@/validations/loginFormValidationSchema";
-import { LoginFormType } from "@/typesAndInterfaces/loginForm.type";
 import logo from "../../public/images/smallLogo.jpeg";
+import { signIn } from "@/api/auth";
+import useAppContext from "@/hooks/useAppContext";
+import { toastErrMessage,toastSuccessMessage } from "@/utils/functions";
+import CircularProgress from '@mui/material/CircularProgress';
 
-const LoginForm = () => {
+type LoginFormType = {
+    email: string;
+    password: string;
+}
+interface LoginFormProps {
+  setOpen: (isOpen: boolean) => void;
+}
+const LoginForm:React.FC<LoginFormProps> = ({setOpen}) => {
   const [userData, setUserData] = useState<LoginFormType>({
     email: "",
     password: "",
   });
+  const [isLoading,setIsLoading]=useState<boolean>(false);
+  const { login } = useAppContext();
 
   const {
     errors,
@@ -28,14 +38,21 @@ const LoginForm = () => {
   } = useFormik({
     initialValues: userData,
     validationSchema: validationSchema,
-    onSubmit: (values: LoginFormType) => {
-      console.log("submit:", values);
+    onSubmit: async(values: LoginFormType) => {
+      setIsLoading(true);
+      const {success,token,message}= await signIn(values);
+
+      if (success && token) {
+        login(token);
+        setOpen(false);
+        toastSuccessMessage("Logged In successfully");
+      } else {
+        toastErrMessage(message);
+      }
+      setIsLoading(false);
     },
   });
-  console.log("errors:",errors)
-  const handleGoogleResponse = (response: any) => {
-    console.log("========", response?.credential);
-  };
+
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFieldValue(name, value.trim());
@@ -95,18 +112,9 @@ const LoginForm = () => {
           <p>Forgot password?</p>
         </div>
 
-        <Button variant="contained" className="login-btn" type="submit">
+        <Button variant="contained" className="login-btn" type="submit" startIcon={isLoading? <CircularProgress size={20} sx={{color:"white"}} />:null}>
           Sign In
         </Button>
-        <div style={{ marginTop: "8px", marginBottom: "20px" }}>
-          <GoogleLogin
-            onSuccess={handleGoogleResponse}
-            size="medium"
-            shape="circle"
-            width="277px"
-            theme="filled_blue"
-          />
-        </div>
         <Link href="#">
           {" "}
           <p className="create-new-account-link">Create new account</p>

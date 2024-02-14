@@ -23,7 +23,7 @@ export const DataType = new GraphQLScalarType({
   },
 });
 export const ResponseType = new GraphQLObjectType({
-  name: "response_type",
+  name: "responseType",
   fields: () => {
     return {
       code: { type: new GraphQLNonNull(GraphQLString) },
@@ -41,10 +41,12 @@ export const LoggedInUserType = new GraphQLObjectType({
       firstName: { type: new GraphQLNonNull(GraphQLString) },
       lastName: { type: new GraphQLNonNull(GraphQLString) },
       role: { type: new GraphQLNonNull(UserRoleEnum) },
+      email: { type: new GraphQLNonNull(GraphQLString) },
+      profileUrl: { type: new GraphQLNonNull(GraphQLString) },
     };
   },
 });
-export const AuthType = new GraphQLObjectType({
+export const AuthPayloadType = new GraphQLObjectType({
   name: "auth",
   fields: () => {
     return {
@@ -67,7 +69,8 @@ export const UserType = new GraphQLObjectType({
       phoneNo: { type: new GraphQLNonNull(GraphQLString) },
       role: { type: new GraphQLNonNull(UserRoleEnum) },
       createdAt:{type: new GraphQLNonNull(GraphQLInt)},
-      updatedAt:{type: new GraphQLNonNull(GraphQLInt)},
+      updatedAt: { type: new GraphQLNonNull(GraphQLInt) },
+      profileUrl:{ type: new GraphQLNonNull(GraphQLString) },
     };
   },
 });

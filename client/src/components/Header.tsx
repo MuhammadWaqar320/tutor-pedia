@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React,{ReactNode} from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -25,8 +25,27 @@ import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import LoginIcon from "@mui/icons-material/Login";
 import Modal from "./Modal";
 import LoginForm from "./LoginForm";
-import { MenuItemType, ListItemType } from "@/typesAndInterfaces/header.type";
+import useAppContext from "@/hooks/useAppContext";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import LogoutIcon from "@mui/icons-material/Logout";
+import HomeIcon from "@mui/icons-material/Home";
+import InfoIcon from "@mui/icons-material/Info";
+import ListAltIcon from "@mui/icons-material/ListAlt";
+import { userRole } from "@/utils/constant";
+import { toastErrMessage } from "@/utils/functions";
 
+type MenuItemType = {
+  id: number;
+  title: string;
+  route: string;
+  icon: ReactNode;
+};
+
+type ListItemType = {
+  id: number;
+  title: string;
+  handleOnClick: () => void;
+};
 
 const Header = () => {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
@@ -35,13 +54,28 @@ const Header = () => {
 
   const [open, setOpen] = React.useState(false);
   const router = useRouter();
+  const { user, isAuthenticated, logout } = useAppContext();
 
   const menuItem: MenuItemType[] = [
-    { id: 1, title: "Home", route: appRoute.PUBLIC_ROUTES.HOME },
-    { id: 2, title: "About", route: appRoute.PUBLIC_ROUTES.ABOUT },
-    { id: 3, title: "Courses", route: appRoute.PUBLIC_ROUTES.COURSES },
+    {
+      id: 1,
+      title: "Home",
+      route: appRoute.PUBLIC_ROUTES.HOME,
+      icon: <HomeIcon />,
+    },
+    {
+      id: 2,
+      title: "About",
+      route: appRoute.PUBLIC_ROUTES.ABOUT,
+      icon: <InfoIcon />,
+    },
+    {
+      id: 3,
+      title: "Courses",
+      route: appRoute.PUBLIC_ROUTES.COURSES,
+      icon: <ListAltIcon />,
+    },
   ];
-
   const listItem: ListItemType[] = [
     {
       id: 1,
@@ -74,7 +108,9 @@ const Header = () => {
     {
       id: 5,
       title: "Sign Up",
-      handleOnClick: () => { router.push("/signUp");},
+      handleOnClick: () => {
+        router.push("/signUp");
+      },
     },
   ];
 
@@ -89,12 +125,23 @@ const Header = () => {
     handleCloseNavMenu();
     navItemOnClick();
   };
+  const handleDashboard = () => {
+    if (user?.role === userRole.admin) {
+      router.push(appRoute.DASHBOARDS.ADMIN.DASHBOARD);
+    } else if (user?.role === userRole.student) {
+      router.push(appRoute.DASHBOARDS.STUDENT.DASHBOARD);
+    } else if (user?.role === userRole.teacher) {
+      router.push(appRoute.DASHBOARDS.TEACHER.DASHBOARD);
+    } else {
+      toastErrMessage("Not authorized.");
+    }
+  };
 
   return (
     <HeaderContainer>
       <AppBar position="relative" sx={appBarStyle}>
         <Container maxWidth="xl">
-          <Toolbar disableGutters >
+          <Toolbar disableGutters>
             <Box sx={LogoContainer}>
               <Image
                 src={logo}
@@ -186,35 +233,65 @@ const Header = () => {
               {menuItem.map((item: MenuItemType) => (
                 <Button
                   key={item.id}
-                  sx={{ my: 2, color: "white", display: "block"}}
+                  sx={{
+                    color: "white",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: 0, // Adjust the gap between the icon and the text as needed
+                  }}
+                  startIcon={item.icon}
                 >
-                  <Link href={item.route} className="header-menu-item"> {item.title}</Link>
+                  <Link href={item.route} className="header-menu-item">
+                    {" "}
+                    {item.title}
+                  </Link>
                 </Button>
               ))}
             </Box>
-
-            <Box sx={{ flexGrow: 0, display: { xs: "none", md: "flex" } }}>
-              <Button
-                variant="outlined"
-                onClick={handleOpen}
-                startIcon={<LoginIcon />}
-                className="login-btn"
-              >
-                Login
-              </Button>
-              <Button
-                variant="contained"
-                startIcon={<PersonAddIcon />}
-                className="sign-up-btn"
-                onClick={()=>router.push(appRoute.PUBLIC_ROUTES.SIGN_UP)}
-              >
-                Sign Up 
-              </Button>
-            </Box>
+            {isAuthenticated ? (
+              <Box sx={{ flexGrow: 0, display: { xs: "none", md: "flex" } }}>
+                <Button
+                  variant="outlined"
+                  onClick={handleDashboard}
+                  startIcon={<DashboardIcon />}
+                  className="login-btn"
+                >
+                  Dashboard
+                </Button>
+                <Button
+                  variant="contained"
+                  startIcon={<LogoutIcon />}
+                  className="sign-up-btn"
+                  onClick={() => logout()}
+                >
+                  Logout
+                </Button>
+              </Box>
+            ) : (
+              <Box sx={{ flexGrow: 0, display: { xs: "none", md: "flex" } }}>
+                <Button
+                  variant="outlined"
+                  onClick={handleOpen}
+                  startIcon={<LoginIcon />}
+                  className="login-btn"
+                >
+                  Login
+                </Button>
+                <Button
+                  variant="contained"
+                  startIcon={<PersonAddIcon />}
+                  className="sign-up-btn"
+                  onClick={() => router.push(appRoute.PUBLIC_ROUTES.SIGN_UP)}
+                >
+                  Sign Up
+                </Button>
+              </Box>
+            )}
           </Toolbar>
           {open && (
             <Modal open={open} setOpen={setOpen}>
-              <LoginForm />
+              <LoginForm setOpen={setOpen} />
             </Modal>
           )}
         </Container>

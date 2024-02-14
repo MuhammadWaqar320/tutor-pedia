@@ -9,14 +9,15 @@ class UserRepo extends GenericRepo<UserInterface& Document> {
   }
   addUser(userData: UserInterface) {
     const newUser = new User({
-      firstName: userData.firstName,
-      lastName: userData.lastName,
-      email: userData.email,
-      password: userData.password,
-      phoneNo: userData.phoneNo,
-      role: userData.role,
+      firstName: userData?.firstName,
+      lastName: userData?.lastName,
+      email: userData?.email,
+      password: userData?.password,
+      phoneNo: userData?.phoneNo,
+      role: userData?.role,
       createdAt: Date.now(),
       updatedAt: Date.now(),
+      profileUrl:userData?.profileUrl
     });
     return newUser.save();
   }

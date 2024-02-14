@@ -2,12 +2,12 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.constructResponse = exports.errorResponse = exports.successResponse = void 0;
 const constant_1 = require("./constant");
-const successResponse = (data, message) => {
+const successResponse = (data, message, code = "OK") => {
     return {
         data: data,
         success: true,
         message: message,
-        code: "OK",
+        code: code,
     };
 };
 exports.successResponse = successResponse;

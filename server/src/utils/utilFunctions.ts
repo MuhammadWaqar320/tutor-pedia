@@ -9,13 +9,14 @@ export interface ResponseReturnType<T> {
 
 export const successResponse = <T>(
   data: T,
-  message: string
+  message: string,
+  code:string="OK"
 ): ResponseReturnType<T> => {
   return {
     data: data,
     success: true,
     message: message,
-    code: "OK",
+    code: code,
   };
 };
 

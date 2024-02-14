@@ -11,14 +11,15 @@ class UserRepo extends genericRepo_1.default {
     }
     addUser(userData) {
         const newUser = new User_1.default({
-            firstName: userData.firstName,
-            lastName: userData.lastName,
-            email: userData.email,
-            password: userData.password,
-            phoneNo: userData.phoneNo,
-            role: userData.role,
+            firstName: userData?.firstName,
+            lastName: userData?.lastName,
+            email: userData?.email,
+            password: userData?.password,
+            phoneNo: userData?.phoneNo,
+            role: userData?.role,
             createdAt: Date.now(),
             updatedAt: Date.now(),
+            profileUrl: userData?.profileUrl
         });
         return newUser.save();
     }

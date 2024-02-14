@@ -6,6 +6,7 @@ import {
   errorResponse,
   ResponseReturnType,
 } from "../utils/utilFunctions";
+import { gqlErrorCodes } from "../utils/constant";
 
 class GenericService<T extends Document> {
   protected repository: GenericRepo<T>;
@@ -14,38 +15,27 @@ class GenericService<T extends Document> {
   }
   async getDataById(
     id: string
-  ): Promise<
-    ResponseReturnType<IfAny<
-      T,
-      any,
-      Document<unknown, {}, T> & Require_id<T>
-    > | null>
-  > {
+  ): Promise<IfAny<
+    T,
+    any,
+    Document<unknown, {}, T> & Require_id<T>
+  > | null | void> {
     try {
-      const dbResponse = await this.repository.getDataById(id);
-      return successResponse(dbResponse, "");
+      return this.repository.getDataById(id);
     } catch (error) {
-      return errorResponse(
-        `An error occurred while processing your request. Error:${error}`,
-        null,
-        null
+      throw new Error(
+        `An error occurred while processing your request, Error:${error}`
       );
     }
   }
   async getAllData(): Promise<
-    | ResponseReturnType<
-        IfAny<T, any, Document<unknown, {}, T> & Require_id<T>>[]
-      >
-    | ResponseReturnType<null>
+    IfAny<T, any, Document<unknown, {}, T> & Require_id<T>>[] | void
   > {
     try {
-      const dbResponse = await this.repository.getAllData();
-      return successResponse(dbResponse, "");
+      return this.repository.getAllData();
     } catch (error) {
-      return errorResponse(
-        `An error occurred while processing your request. Error:${error}`,
-        null,
-        null
+      throw new Error(
+        `An error occurred while processing your request, Error:${error}`
       );
     }
   }
@@ -61,7 +51,11 @@ class GenericService<T extends Document> {
   > {
     try {
       const dbResponse = await this.repository.updateDataById(id, data);
-      return successResponse(dbResponse, "Data has been updated");
+      return successResponse(
+        dbResponse,
+        dbResponse ? "Data has been updated" : "Not found",
+        dbResponse ? gqlErrorCodes.OK : gqlErrorCodes.notFound
+      );
     } catch (error) {
       return errorResponse(
         `An error occurred while processing your request. Error:${error}`,
@@ -80,7 +74,10 @@ class GenericService<T extends Document> {
   > {
     try {
       const dbResponse = await this.repository.deleteById(id);
-      return successResponse(dbResponse, "Data has been deleted");
+      return successResponse(
+        dbResponse,
+        dbResponse ? "Data has been deleted" : "Not found",dbResponse?gqlErrorCodes.OK:gqlErrorCodes.notFound
+      );
     } catch (error) {
       return errorResponse(
         `An error occurred while processing your request. Error:${error}`,

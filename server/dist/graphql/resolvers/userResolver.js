@@ -3,44 +3,26 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AuthResolver = exports.createUserResolver = exports.getUserByIdResolver = exports.getAllUserResolver = void 0;
-const User_1 = __importDefault(require("../../data/models/User"));
+exports.deleteUser = exports.updateUserResolver = exports.createUserResolver = exports.getUserByIdResolver = exports.getAllUserResolver = void 0;
 const userService_1 = __importDefault(require("../../services/userService"));
 const UserService = new userService_1.default();
 const getAllUserResolver = async () => {
-    const responseData = await UserService.getAllData();
-    return responseData;
+    return UserService.getAllData();
 };
 exports.getAllUserResolver = getAllUserResolver;
 const getUserByIdResolver = (_, args) => {
-    return User_1.default.findById(args.id);
+    return UserService.getDataById(args.id);
 };
 exports.getUserByIdResolver = getUserByIdResolver;
 const createUserResolver = async (_, args) => {
-    const responseData = await UserService.createUser(args);
-    return responseData;
+    return UserService.createUser(args);
 };
 exports.createUserResolver = createUserResolver;
-const AuthResolver = async (_, args) => {
-    const user = await User_1.default.findOne({ email: args.email });
-    if (!user) {
-        return {
-            success: false,
-            token: "",
-            message: "user not found",
-            user: null,
-        };
-    }
-    return {
-        success: true,
-        token: "sdfkl234kjf234234",
-        message: "good",
-        user: {
-            id: user.id,
-            firstName: user.firstName,
-            lastName: user.lastName,
-            role: user.role,
-        },
-    };
+const updateUserResolver = async (_, args) => {
+    return UserService.updateDataById(args.id, args);
 };
-exports.AuthResolver = AuthResolver;
+exports.updateUserResolver = updateUserResolver;
+const deleteUser = async (_, args) => {
+    return UserService.deleteById(args.id);
+};
+exports.deleteUser = deleteUser;

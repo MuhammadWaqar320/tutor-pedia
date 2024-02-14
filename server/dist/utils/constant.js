@@ -12,4 +12,6 @@ exports.gqlErrorCodes = {
     internalServerError: "INTERNAL_SERVER_ERROR",
     notFound: "NOT_FOUND",
     forbidden: "FORBIDDEN",
+    OK: "OK",
+    alreadyExist: "ALREADY_EXIST"
 };
