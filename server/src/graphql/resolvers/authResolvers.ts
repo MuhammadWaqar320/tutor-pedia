@@ -1,4 +1,4 @@
-import { AuthInterface } from "../../interfaces/Auth";
+import { AuthInterface } from "../../interfaces/auth";
 import AuthServiceClass from "../../services/authService";
 
 const AuthService = new AuthServiceClass();

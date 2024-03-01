@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
-import { UserInterface } from "../../interfaces/User";
-import { UserRole } from "../../interfaces/User";
+import { UserRole,UserInterface } from "../../interfaces/user";
 import { Document } from "mongoose";
 
 const UserSchema = new mongoose.Schema({
@@ -32,7 +31,7 @@ const UserSchema = new mongoose.Schema({
   }, 
   profileUrl: {
     type: String,
-  },
+  }
 });
 
 const UserModel = mongoose.model<UserInterface & Document>("User", UserSchema);

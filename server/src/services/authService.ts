@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 import UserRepoClass from "../data/repo/userRepo";
 import jwt from "jsonwebtoken";
-import { AuthInterface } from "../interfaces/Auth";
+import { AuthInterface } from "../interfaces/auth";
 
 const UserRepo = new UserRepoClass();
 

@@ -24,6 +24,7 @@ const Container = styled.div`
       display: flex;
       font-size: 22px;
       margin-left: 50px;
+      align-items: center;
       & :hover {
         cursor: pointer;
       }

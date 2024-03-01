@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 import { successResponse, errorResponse } from "../utils/utilFunctions";
-import { UserInterface } from "../interfaces/User";
+import { UserInterface } from "../interfaces/user";
 import UserRepoClass from "../data/repo/userRepo";
 import GenericService from "./genericService";
 import { Model, ModifyResult, IfAny, Document, Require_id } from "mongoose";

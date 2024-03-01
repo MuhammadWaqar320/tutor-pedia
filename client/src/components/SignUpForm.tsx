@@ -15,8 +15,10 @@ import { toastSuccessMessage, toastErrMessage } from "@/utils/functions";
 import { gqlErrorCodes } from "@/utils/constant";
 import CircularProgress from '@mui/material/CircularProgress';
 import { uploadFileToFBStorageAndGetURL } from "@/api/common";
+import { useRouter } from "next/navigation";
 
 const SignUpForm = () => {
+  const router = useRouter();
   const [userData, setUserData] = useState<UserType>({
     firstName: "",
     lastName: "",
@@ -61,6 +63,8 @@ const SignUpForm = () => {
     profileUrl:""
   })
           toastSuccessMessage("You have been registered successfully.");
+          router.push("/");
+
         } else if (
           response?.code === gqlErrorCodes.alreadyExist &&
           !response?.success

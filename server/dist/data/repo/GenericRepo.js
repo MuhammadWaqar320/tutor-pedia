@@ -14,7 +14,7 @@ class GenericRepo {
     updateDataById(id, data) {
         return this.model
             .findByIdAndUpdate(id, data, {
-            new: true,
+            new: true, // Return the updated document
             runValidators: true, // Run validators for schema fields
         })
             .exec();
