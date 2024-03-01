@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { Document } from "mongoose";
+import { Document,Schema } from "mongoose";
 import { CourseInterface } from "../../interfaces/course";
 
 const CourseSchema = new mongoose.Schema({
@@ -57,7 +57,9 @@ const CourseSchema = new mongoose.Schema({
     },
     endDate: {
         type: Number
-    }
+    },
+    teacher: { type: Schema.Types.ObjectId, ref: 'Teacher', required: true },
+    students: [{ type: Schema.Types.ObjectId, ref: 'Student' }],
 });
 
 const CourseModel = mongoose.model<CourseInterface & Document>("Course", CourseSchema);

@@ -1,3 +1,5 @@
+import { Schema } from "mongoose";
+
 export interface CourseInterface {
     name: string;
     category: string;
@@ -14,4 +16,6 @@ export interface CourseInterface {
     rating: number;
     startDate: number;
     endDate: number;
+    teacher:Schema.Types.ObjectId;
+    students: Schema.Types.ObjectId[];
   }

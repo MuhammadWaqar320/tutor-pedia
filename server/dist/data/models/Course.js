@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
+const mongoose_2 = require("mongoose");
 const CourseSchema = new mongoose_1.default.Schema({
     name: {
         type: String,
@@ -59,7 +60,9 @@ const CourseSchema = new mongoose_1.default.Schema({
     },
     endDate: {
         type: Number
-    }
+    },
+    teacher: { type: mongoose_2.Schema.Types.ObjectId, ref: 'Teacher', required: true },
+    students: [{ type: mongoose_2.Schema.Types.ObjectId, ref: 'Student' }],
 });
 const CourseModel = mongoose_1.default.model("Course", CourseSchema);
 exports.default = CourseModel;

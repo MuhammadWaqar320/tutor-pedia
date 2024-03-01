@@ -28,8 +28,8 @@ const mongoose_1 = __importStar(require("mongoose"));
 const TeacherCourseSchema = new mongoose_1.Schema({
     createdAt: { type: Number, required: true },
     updatedAt: { type: Number, required: true },
-    courseId: { type: Number, required: true },
-    teacherId: { type: Number, required: true },
+    teacher: { type: mongoose_1.Schema.Types.ObjectId, ref: 'Teacher', required: true },
+    course: { type: mongoose_1.Schema.Types.ObjectId, ref: 'Course', required: true },
     isActive: { type: Boolean, required: true },
 });
 // Define and export the model for the teacher course

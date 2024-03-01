@@ -1,20 +1,18 @@
+import { Schema } from "mongoose";
+
+
 export interface TeacherInterface {
     specialization:string;
     bio:string;
     qualification:string;
+    courses:Schema.Types.ObjectId[];
+    students:Schema.Types.ObjectId[];
+    user:Schema.Types.ObjectId;
    }
 export interface TeacherFeedbackInterface{
-    teacherId: number;
-    studentId: number;
+    teacher: Schema.Types.ObjectId;
+    student: Schema.Types.ObjectId;
     feedback: string;
     rating: number;
     feedbackDate: number;
-}
-export interface TeacherCourseInterface{
-    createdAt: number;
-    updatedAt: number;
-    courseId: number; // ID of the course associated with the teacher
-    teacherId: number; // ID of the teacher associated with the course
-    isActive: boolean; // Indicates if the teacher is currently active for this course
-    role: string; // Role of the teacher in the course (e.g., instructor, assistant)
 }

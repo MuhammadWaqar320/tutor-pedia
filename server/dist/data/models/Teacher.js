@@ -29,6 +29,9 @@ const TeacherSchema = new mongoose_1.Schema({
     specialization: { type: String, required: true },
     bio: { type: String, required: true },
     qualification: { type: String, required: true },
+    courses: [{ type: mongoose_1.Schema.Types.ObjectId, ref: 'Course' }],
+    students: [{ type: mongoose_1.Schema.Types.ObjectId, ref: 'Student' }],
+    user: { type: mongoose_1.Schema.Types.ObjectId, ref: 'User', required: true },
 });
 // Define and export the model for the teacher
 const TeacherModel = mongoose_1.default.model("Teacher", TeacherSchema);
