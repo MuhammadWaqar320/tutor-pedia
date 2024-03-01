@@ -28,7 +28,7 @@ function Footer() {
         {/* First Row */}
         <Grid item xs={12} className="footer-row-1">
           <Grid container spacing={4}>
-            <Grid item xs={12} md={6} className="website-info-section">
+            <Grid item xs={12} md={5} className="website-info-section">
               <div className="footer-img-section">
                    <Image
                 src={logo}
@@ -50,7 +50,7 @@ function Footer() {
                 learning journey towards success and personal growth.
               </p>
             </Grid>
-            <Grid item xs={6} md={2} className="quick-links">
+            <Grid item xs={6} md={2.5} className="quick-links">
               <h6 style={{color:"yellow"}}>Quick Links</h6>
               <div className="quick-links-list">
                 <ul >
@@ -59,7 +59,7 @@ function Footer() {
                 </ul>
               </div>
             </Grid>
-            <Grid item xs={6} md={2} className="contact-us">
+            <Grid item xs={6} md={2.5} className="contact-us">
               <h6 style={{color:"yellow"}}>Contact Us</h6>
               <div className="contact-us-list">
                    <ul >

@@ -1,4 +1,4 @@
-import { UserRole } from "../../interfaces/User";
+import { UserRole } from "../../interfaces/user";
 import { GraphQLEnumType } from "graphql";
 
 export const UserRoleEnum = new GraphQLEnumType({

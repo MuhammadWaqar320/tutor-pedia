@@ -1,6 +1,6 @@
 import User from "../models/User";
 import { Model,ModifyResult, IfAny, Document, Require_id } from "mongoose";
-import { UserInterface } from "../../interfaces/User";
+import { UserInterface } from "../../interfaces/user";
 import GenericRepo from "./genericRepo";
 
 class UserRepo extends GenericRepo<UserInterface& Document> {

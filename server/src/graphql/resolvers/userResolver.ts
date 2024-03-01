@@ -1,7 +1,7 @@
 import User from "../../data/models/User";
-import { UserInterface } from "../../interfaces/User";
+import { UserInterface } from "../../interfaces/user";
 import { successResponse, errorResponse } from "../../utils/utilFunctions";
-import { AuthInterface } from "../../interfaces/Auth";
+import { AuthInterface } from "../../interfaces/auth";
 import UserServiceClass from "../../services/userService";
 import { Document } from "mongoose";
 
