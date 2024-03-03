@@ -11,7 +11,7 @@ export interface CourseInterface {
     upatedAt: number;
     createAt: number;
     coverPhotoUrl:string;
-    Language: string;
+    language: string;
     isCertified: boolean;
     rating: number;
     startDate: number;

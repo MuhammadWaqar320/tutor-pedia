@@ -11,6 +11,6 @@ const TeacherFeedbackSchema = new Schema<Document&TeacherFeedbackInterface>({
 });
 
 // Define and export the model for the teacher feedback
-const TeacherFeedbackModel = mongoose.model<Document>("TeacherFeedback", TeacherFeedbackSchema);
+const TeacherFeedbackModel = mongoose.model<TeacherFeedbackInterface&Document>("TeacherFeedback", TeacherFeedbackSchema);
 
 export default TeacherFeedbackModel;
