@@ -3,14 +3,14 @@ import React from "react";
 import DashboardLayout from "@/components/DashboardLayout";
 import {studentDashboardMenuItem} from "@/utils/constant";
 
-const StudentDashboard = () => {
+const Courses = () => {
 
    return (
-    <DashboardLayout menuItemList={studentDashboardMenuItem}>
-       <>student123</>
+     <DashboardLayout menuItemList={studentDashboardMenuItem}>
+       <>course123</>
      </DashboardLayout>
    );
  
 };
 
-export default StudentDashboard;
+export default Courses;
