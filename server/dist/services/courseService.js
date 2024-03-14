@@ -10,5 +10,7 @@ class CourseService extends genericService_1.default {
     constructor() {
         super(CourseRepo);
     }
+    async createCourse() {
+    }
 }
 exports.default = CourseService;

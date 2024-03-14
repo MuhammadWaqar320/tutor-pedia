@@ -34,6 +34,9 @@ const mutation = new graphql_1.GraphQLObjectType({
                 phoneNo: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) },
                 role: { type: new graphql_1.GraphQLNonNull(EnumTypes_1.UserRoleEnum) },
                 profileUrl: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) },
+                bio: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) },
+                qualification: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) },
+                specialization: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) }
             },
             resolve: userResolver_1.createUserResolver,
         },

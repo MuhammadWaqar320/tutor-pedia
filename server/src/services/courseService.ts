@@ -10,6 +10,9 @@ class CourseService extends GenericService<CourseInterface & Document> {
   constructor() {
     super(CourseRepo);
   }
+  async createCourse() {
+    
+  }
 }
 
 export default CourseService;

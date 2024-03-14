@@ -47,6 +47,9 @@ const mutation = new GraphQLObjectType({
         phoneNo: { type: new GraphQLNonNull(GraphQLString) },
         role: { type: new GraphQLNonNull(UserRoleEnum) },
         profileUrl: { type: new GraphQLNonNull(GraphQLString) },
+        bio: { type: new GraphQLNonNull(GraphQLString) },
+        qualification: { type: new GraphQLNonNull(GraphQLString) },
+        specialization: { type: new GraphQLNonNull(GraphQLString) }
       },
       resolve: createUserResolver,
     },

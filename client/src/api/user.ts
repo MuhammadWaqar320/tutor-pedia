@@ -18,7 +18,10 @@ export interface UserType {
   phoneNo: string;
   role: UserRole;
   password: string;
-  profileUrl:string;
+  profileUrl: string;
+  bio?: string;
+  qualification?: string;
+  specialization?: string;
 }
 interface CreateUserResponse {
   success:boolean,
@@ -34,6 +37,9 @@ const createUserMutation = gql`
     $phoneNo: String!
     $role: UserRole!
     $profileUrl:String!
+    $bio:String!
+    $qualification:String!
+    $specialization:String!
   ) {
     createUser(
       firstName: $firstName
@@ -43,6 +49,9 @@ const createUserMutation = gql`
       phoneNo: $phoneNo
       role: $role
       profileUrl:$profileUrl
+      bio:$bio
+      qualification:$qualification
+      specialization:$specialization
     ) {
       success
       code

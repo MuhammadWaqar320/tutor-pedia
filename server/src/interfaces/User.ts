@@ -12,6 +12,6 @@ export interface UserInterface {
   phoneNo: string;
   createdAt: number;
   updatedAt: number;
-  profileUrl:string;
+  profileUrl: string;
 }
 
