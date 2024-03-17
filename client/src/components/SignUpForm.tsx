@@ -12,8 +12,8 @@ import { validationSchema } from "@/validations/signUpFormValidationSchema";
 import { UserType, UserRole } from "@/api/user";
 import { createNewUser } from "@/api/user";
 import { toastSuccessMessage, toastErrMessage } from "@/utils/functions";
-import { gqlErrorCodes } from "@/utils/constant";
-import CircularProgress from '@mui/material/CircularProgress';
+import { gqlErrorCodes, userRole } from "@/utils/constant";
+import CircularProgress from "@mui/material/CircularProgress";
 import { uploadFileToFBStorageAndGetURL } from "@/api/common";
 import { useRouter } from "next/navigation";
 
@@ -26,7 +26,10 @@ const SignUpForm = () => {
     phoneNo: "",
     role: UserRole.Student,
     password: "",
-    profileUrl:""
+    profileUrl: "",
+    bio: "",
+    qualification: "",
+    specialization: "",
   });
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [file, setFile] = useState<File | null>(null);
@@ -43,40 +46,43 @@ const SignUpForm = () => {
     onSubmit: async (values: UserType) => {
       try {
         setIsLoading(true);
-         const { url, success } = await uploadFileToFBStorageAndGetURL(
-      `userProfile/${Date.now()}${file?.name}`,
-      file
-    );
+        const { url, success } = await uploadFileToFBStorageAndGetURL(
+          `userProfile/${Date.now()}${file?.name}`,
+          file
+        );
 
-    if(success){
-        const response = await createNewUser({...values,profileUrl:url});
-        
-      if (response?.success) {
-        setIsLoading(false);
-        setUserData({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phoneNo: "",
-    role: UserRole.Student,
-    password: "",
-    profileUrl:""
-  })
-          toastSuccessMessage("You have been registered successfully.");
-          router.push("/");
+        if (success) {
+          const response = await createNewUser({ ...values, profileUrl: url });
 
-        } else if (
-          response?.code === gqlErrorCodes.alreadyExist &&
-          !response?.success
-        ) {
+          if (response?.success) {
+            setIsLoading(false);
+            setUserData({
+              firstName: "",
+              lastName: "",
+              email: "",
+              phoneNo: "",
+              role: UserRole.Student,
+              password: "",
+              profileUrl: "",
+              bio: "",
+              specialization: "",
+              qualification:""
+            });
+            toastSuccessMessage("You have been registered successfully.");
+            router.push("/");
+          } else if (
+            response?.code === gqlErrorCodes.alreadyExist &&
+            !response?.success
+          ) {
+            setIsLoading(false);
+            toastErrMessage("User is already exist.");
+          }
+        } else {
           setIsLoading(false);
-           toastErrMessage("User is already exist.");
-      }
-    }else{
-       setIsLoading(false);
-         toastErrMessage("An error occurred while uploading your profile picture.");
-    }
-  
+          toastErrMessage(
+            "An error occurred while uploading your profile picture."
+          );
+        }
       } catch (error) {
         setIsLoading(false);
         toastErrMessage("An error occurred while processing your request.");
@@ -98,7 +104,7 @@ const SignUpForm = () => {
     setFieldValue(name, value);
     setFieldTouched(name, true, false);
   };
-    const onChangeFile = (event: React.ChangeEvent) => {
+  const onChangeFile = (event: React.ChangeEvent) => {
     const target = event.target as HTMLInputElement;
     const file = target?.files?.[0];
     if (file) {
@@ -137,7 +143,7 @@ const SignUpForm = () => {
           <p className="errorMessage">{errors.firstName}</p>
         ) : null}
       </Form.Group>
-      <Form.Group controlId="formGridFatherName" className="mb-1.5">
+      <Form.Group controlId="formGridLName" className="mb-1.5">
         <Form.Label className="mb-0.5">Last Name:</Form.Label>
         <Form.Control
           type="text"
@@ -152,8 +158,7 @@ const SignUpForm = () => {
           <p className="errorMessage">{errors.lastName}</p>
         ) : null}
       </Form.Group>
-
-      <Form.Group controlId="formGridName" className="mb-1.5">
+      <Form.Group controlId="formGridEmail" className="mb-1.5">
         <Form.Label className="mb-0.5">Email:</Form.Label>
         <Form.Control
           type="text"
@@ -168,7 +173,7 @@ const SignUpForm = () => {
           <p className="errorMessage">{errors.email}</p>
         ) : null}
       </Form.Group>
-      <Form.Group controlId="formGridFatherName" className="mb-1.5">
+      <Form.Group controlId="formGridPhoneNo" className="mb-1.5">
         <Form.Label className="mb-0.5">Phone Number:</Form.Label>
         <Form.Control
           type="text"
@@ -183,7 +188,7 @@ const SignUpForm = () => {
           <p className="errorMessage">{errors.phoneNo}</p>
         ) : null}
       </Form.Group>
-      <Form.Group as={Col} controlId="formGridName" className="mb-1.5">
+      <Form.Group as={Col} controlId="formGridPassword" className="mb-1.5">
         <Form.Label className="mb-0.5">Password:</Form.Label>
         <Form.Control
           type="password"
@@ -198,7 +203,7 @@ const SignUpForm = () => {
           <p className="errorMessage">{errors.password}</p>
         ) : null}
       </Form.Group>
-      <Form.Group as={Col} controlId="formGridFatherName" className="mb-1.5">
+      <Form.Group as={Col} controlId="formGridType" className="mb-1.5">
         <Form.Label className="mb-0.5">Sign Up As:</Form.Label>
         <Form.Select
           aria-label="Default select example"
@@ -210,7 +215,58 @@ const SignUpForm = () => {
           <option value={UserRole.Student}>Student</option>
         </Form.Select>
       </Form.Group>
-        <Form.Group as={Col} controlId="formGridName" className="mb-1.5">
+      {values.role === userRole.teacher ? (
+        <>
+          {" "}
+          <Form.Group controlId="formGridBio" className="mb-1.5">
+            <Form.Label className="mb-0.5">BIO:</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Enter your information"
+              name="bio"
+              onBlur={handleOnBlur}
+              value={values.bio}
+              onChange={handleOnChange}
+              required
+            />
+            {touched.bio && errors.bio ? (
+              <p className="errorMessage">{errors.bio}</p>
+            ) : null}
+          </Form.Group>
+          <Form.Group controlId="formGridQualification" className="mb-1.5">
+            <Form.Label className="mb-0.5">Qualification:</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Enter your  qualification"
+              name="qualification"
+              onBlur={handleOnBlur}
+              value={values.qualification}
+              onChange={handleOnChange}
+              required
+            />
+            {touched.qualification && errors.qualification ? (
+              <p className="errorMessage">{errors.qualification}</p>
+            ) : null}
+          </Form.Group>
+          <Form.Group controlId="formGridSpecialization" className="mb-1.5">
+            <Form.Label className="mb-0.5">Specialization:</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Enter your  specialization"
+              name="specialization"
+              onBlur={handleOnBlur}
+              value={values.specialization}
+              onChange={handleOnChange}
+              required
+            />
+            {touched.specialization && errors.specialization ? (
+              <p className="errorMessage">{errors.specialization}</p>
+            ) : null}
+          </Form.Group>
+        </>
+      ) : null}
+
+      <Form.Group as={Col} controlId="formGridPic" className="mb-1.5">
         <Form.Label className="mb-0.5">Upload profile picture:</Form.Label>
         <Form.Control
           type="file"
@@ -225,7 +281,13 @@ const SignUpForm = () => {
         <Button
           variant="contained"
           type="submit"
-          startIcon={isLoading?   <CircularProgress size={22} color="warning" />: <HowToRegIcon />}
+          startIcon={
+            isLoading ? (
+              <CircularProgress size={22} color="warning" />
+            ) : (
+              <HowToRegIcon />
+            )
+          }
           style={{
             background: "#002D5F",
             width: "300px",

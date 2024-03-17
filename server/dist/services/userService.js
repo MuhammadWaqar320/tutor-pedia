@@ -7,7 +7,12 @@ const bcrypt_1 = __importDefault(require("bcrypt"));
 const utilFunctions_1 = require("../utils/utilFunctions");
 const userRepo_1 = __importDefault(require("../data/repo/userRepo"));
 const genericService_1 = __importDefault(require("./genericService"));
+const studentService_1 = __importDefault(require("./studentService"));
+const user_1 = require("../interfaces/user");
+const teacherService_1 = __importDefault(require("./teacherService"));
 const UserRepo = new userRepo_1.default();
+const StuService = new studentService_1.default();
+const TService = new teacherService_1.default();
 class UserService extends genericService_1.default {
     constructor() {
         super(UserRepo);
@@ -22,6 +27,24 @@ class UserService extends genericService_1.default {
                     password: hashedPassword,
                 };
                 const dbResponse = await UserRepo.addUser(newUser);
+                if (data.role === user_1.UserRole.Student) {
+                    await StuService.createStudent({
+                        user: dbResponse._id,
+                        updatedAt: Date.now(),
+                        courses: [],
+                        teachers: [],
+                    });
+                }
+                else if (data.role === user_1.UserRole.Teacher) {
+                    await TService.createTeacher({
+                        specialization: data?.specialization,
+                        bio: data?.bio,
+                        qualification: data?.qualification,
+                        courses: [],
+                        students: [],
+                        user: dbResponse._id,
+                    });
+                }
                 return (0, utilFunctions_1.successResponse)(dbResponse, "User created");
             }
             else {

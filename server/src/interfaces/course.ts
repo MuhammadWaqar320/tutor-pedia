@@ -1,6 +1,7 @@
 import { Schema } from "mongoose";
 
 export interface CourseInterface {
+  id: string;
     name: string;
     category: string;
     description: string;
@@ -11,7 +12,7 @@ export interface CourseInterface {
     upatedAt: number;
     createAt: number;
     coverPhotoUrl:string;
-    Language: string;
+    language: string;
     isCertified: boolean;
     rating: number;
     startDate: number;

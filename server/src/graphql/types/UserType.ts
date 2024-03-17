@@ -7,7 +7,7 @@ import {
   GraphQLScalarType,
   GraphQLInt,
 } from "graphql";
-import { UserRoleEnum } from "./EnumTypes";
+import { UserRoleEnum } from "./EnumType";
 
 export const DataType = new GraphQLScalarType({
   name: "DataType",
