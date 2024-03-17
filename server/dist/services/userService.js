@@ -28,14 +28,15 @@ class UserService extends genericService_1.default {
                 };
                 const dbResponse = await UserRepo.addUser(newUser);
                 if (data.role === user_1.UserRole.Student) {
-                    await StuService.createStudent({ user: dbResponse._id,
+                    await StuService.createStudent({
+                        user: dbResponse._id,
                         updatedAt: Date.now(),
                         courses: [],
-                        teachers: []
+                        teachers: [],
                     });
                 }
                 else if (data.role === user_1.UserRole.Teacher) {
-                    const a = await TService.createTeacher({
+                    await TService.createTeacher({
                         specialization: data?.specialization,
                         bio: data?.bio,
                         qualification: data?.qualification,

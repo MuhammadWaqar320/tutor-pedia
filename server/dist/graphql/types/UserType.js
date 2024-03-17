@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserType = exports.AuthPayloadType = exports.LoggedInUserType = exports.ResponseType = exports.DataType = void 0;
 const graphql_1 = require("graphql");
-const EnumTypes_1 = require("./EnumTypes");
+const EnumType_1 = require("./EnumType");
 exports.DataType = new graphql_1.GraphQLScalarType({
     name: "DataType",
     description: "Represents a generic data type in GraphQL",
@@ -34,7 +34,7 @@ exports.LoggedInUserType = new graphql_1.GraphQLObjectType({
             id: { type: graphql_1.GraphQLID },
             firstName: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) },
             lastName: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) },
-            role: { type: new graphql_1.GraphQLNonNull(EnumTypes_1.UserRoleEnum) },
+            role: { type: new graphql_1.GraphQLNonNull(EnumType_1.UserRoleEnum) },
             email: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) },
             profileUrl: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) },
         };
@@ -61,7 +61,7 @@ exports.UserType = new graphql_1.GraphQLObjectType({
             email: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) },
             password: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) },
             phoneNo: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) },
-            role: { type: new graphql_1.GraphQLNonNull(EnumTypes_1.UserRoleEnum) },
+            role: { type: new graphql_1.GraphQLNonNull(EnumType_1.UserRoleEnum) },
             createdAt: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLInt) },
             updatedAt: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLInt) },
             profileUrl: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) },
