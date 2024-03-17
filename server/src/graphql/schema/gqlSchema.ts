@@ -5,6 +5,8 @@ import {
   GraphQLNonNull,
   GraphQLID,
   GraphQLList,
+  GraphQLInt,
+  GraphQLBoolean
 } from "graphql";
 import {
   getAllUserResolver,
@@ -14,8 +16,10 @@ import {
   deleteUser
 } from "../resolvers/userResolver";
 import { AuthResolver } from "../resolvers/authResolvers";
-import { UserRoleEnum } from "../types/EnumTypes";
-import { UserType,AuthPayloadType,ResponseType } from "../types/UserTypes";
+import { UserRoleEnum } from "../types/EnumType";
+import { UserType, AuthPayloadType, ResponseType } from "../types/UserType";
+import { CourseType } from "../types/CourseType";
+import { createCourseResolver, deleteCourseResolver, getAllCoursesResolver, getCourseByIdResolver, updateCourseResolver } from "../resolvers/courseResolver";
 
 // GraphQL Query
 const query = new GraphQLObjectType({
@@ -30,6 +34,14 @@ const query = new GraphQLObjectType({
       args: { id: { type: GraphQLID } },
       resolve: getUserByIdResolver,
     },
+    getAllCourse: {
+      type: new GraphQLList(CourseType),
+      resolve:getAllCoursesResolver,
+    },
+    getCourseById: {
+      type: CourseType,
+      resolve:getCourseByIdResolver
+    }
   },
 });
 
@@ -53,6 +65,30 @@ const mutation = new GraphQLObjectType({
       },
       resolve: createUserResolver,
     },
+    createCourse: {
+      type:ResponseType,
+      args: {
+         name: { type: new GraphQLNonNull(GraphQLString) },
+    category: { type: new GraphQLNonNull(GraphQLString) },
+    description: { type: new GraphQLNonNull(GraphQLString) },
+    price: { type: new GraphQLNonNull(GraphQLString) },
+    level: { type: new GraphQLNonNull(GraphQLInt) },
+    duration: { type: new GraphQLNonNull(GraphQLString) },
+    preRequisites: { type: new GraphQLNonNull(GraphQLString) },
+    updatedAt: { type: new GraphQLNonNull(GraphQLInt) },
+    createdAt: { type: new GraphQLNonNull(GraphQLInt) },
+    coverPhotoUrl: { type: new GraphQLNonNull(GraphQLString) },
+    language: { type: new GraphQLNonNull(GraphQLString) },
+    isCertified: { type: new GraphQLNonNull(GraphQLBoolean) },
+    rating: { type: new GraphQLNonNull(GraphQLInt) },
+    startDate: { type: new GraphQLNonNull(GraphQLInt) },
+    endDate: { type: new GraphQLNonNull(GraphQLInt) },
+    teacher: { type: GraphQLID }, // Assuming teacher id is of type GraphQLID
+    students: { type: new GraphQLList(GraphQLID) },
+      },
+      resolve:createCourseResolver
+    }
+    ,
     updateUser: {
       type: ResponseType,
       args: {
@@ -67,12 +103,43 @@ const mutation = new GraphQLObjectType({
       },
       resolve: updateUserResolver,
     },
+    updateCourse: {
+      type: ResponseType,
+      args: {
+         id: { type: GraphQLID },
+         name: { type: new GraphQLNonNull(GraphQLString) },
+    category: { type: new GraphQLNonNull(GraphQLString) },
+    description: { type: new GraphQLNonNull(GraphQLString) },
+    price: { type: new GraphQLNonNull(GraphQLString) },
+    level: { type: new GraphQLNonNull(GraphQLInt) },
+    duration: { type: new GraphQLNonNull(GraphQLString) },
+    preRequisites: { type: new GraphQLNonNull(GraphQLString) },
+    updatedAt: { type: new GraphQLNonNull(GraphQLInt) },
+    createdAt: { type: new GraphQLNonNull(GraphQLInt) },
+    coverPhotoUrl: { type: new GraphQLNonNull(GraphQLString) },
+    language: { type: new GraphQLNonNull(GraphQLString) },
+    isCertified: { type: new GraphQLNonNull(GraphQLBoolean) },
+    rating: { type: new GraphQLNonNull(GraphQLInt) },
+    startDate: { type: new GraphQLNonNull(GraphQLInt) },
+    endDate: { type: new GraphQLNonNull(GraphQLInt) },
+    teacher: { type: GraphQLID }, // Assuming teacher id is of type GraphQLID
+    students: { type: new GraphQLList(GraphQLID) },
+      },
+      resolve:updateCourseResolver
+    },
     deleteUser: {
       type: ResponseType,
       args: {
         id: { type: GraphQLID },
       },
       resolve: deleteUser,
+    },
+    deleteCourse: {
+      type: ResponseType,
+      args: {
+         id: { type: GraphQLID },
+      },
+      resolve:deleteCourseResolver
     },
     auth: {
       type: AuthPayloadType,

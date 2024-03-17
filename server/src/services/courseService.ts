@@ -10,8 +10,17 @@ class CourseService extends GenericService<CourseInterface & Document> {
   constructor() {
     super(CourseRepo);
   }
-  async createCourse() {
-    
+  async createCourse(data:CourseInterface) {
+      try {
+        const dbResponse = await CourseRepo.addCourse(data);
+        return successResponse(dbResponse, "Course created");
+    } catch (error) {
+      return errorResponse(
+        `An error occurred while processing your request, Error: ${error}`,
+        null,
+        null
+      );
+    }
   }
 }
 

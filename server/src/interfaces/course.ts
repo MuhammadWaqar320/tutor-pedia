@@ -1,6 +1,7 @@
 import { Schema } from "mongoose";
 
 export interface CourseInterface {
+  id: string;
     name: string;
     category: string;
     description: string;
