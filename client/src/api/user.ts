@@ -20,7 +20,26 @@ export interface UserType {
   password: string;
   profileUrl:string;
 }
+
+export interface AddCourseType {
+  name: string;
+  category: string;
+  description: string;
+  price: string;
+  level: number;
+  duration: number;
+  preRequisites: string;
+  photoUrl: string;
+  language:string;
+  isCertified:boolean;
+
+}
 interface CreateUserResponse {
+  success:boolean,
+  code:string
+}
+
+interface addNewCourseResponse {
   success:boolean,
   code:string
 }
@@ -63,3 +82,15 @@ export const createNewUser = async (
     throw error;
   }
 };
+
+// export const AddNewCourse = async (
+//   variables: AddCourseType
+// ): Promise<addNewCourseResponse> => {
+//   try{
+
+//     return  
+
+//   }catch (error) {
+//     throw error;
+//   }
+// }
