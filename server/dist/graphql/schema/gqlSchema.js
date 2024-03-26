@@ -26,8 +26,8 @@ const query = new graphql_1.GraphQLObjectType({
         },
         getCourseById: {
             type: CourseType_1.CourseType,
-            resolve: courseResolver_1.getCourseByIdResolver
-        }
+            resolve: courseResolver_1.getCourseByIdResolver,
+        },
     },
 });
 //GraphQL Mutation
@@ -46,7 +46,7 @@ const mutation = new graphql_1.GraphQLObjectType({
                 profileUrl: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) },
                 bio: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) },
                 qualification: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) },
-                specialization: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) }
+                specialization: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) },
             },
             resolve: userResolver_1.createUserResolver,
         },
@@ -68,10 +68,10 @@ const mutation = new graphql_1.GraphQLObjectType({
                 rating: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLInt) },
                 startDate: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLInt) },
                 endDate: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLInt) },
-                teacher: { type: graphql_1.GraphQLID }, // Assuming teacher id is of type GraphQLID
+                teacher: { type: graphql_1.GraphQLID },
                 students: { type: new graphql_1.GraphQLList(graphql_1.GraphQLID) },
             },
-            resolve: courseResolver_1.createCourseResolver
+            resolve: courseResolver_1.createCourseResolver,
         },
         updateUser: {
             type: UserType_1.ResponseType,
@@ -83,7 +83,7 @@ const mutation = new graphql_1.GraphQLObjectType({
                 password: { type: graphql_1.GraphQLString },
                 phoneNo: { type: graphql_1.GraphQLString },
                 role: { type: EnumType_1.UserRoleEnum },
-                profileUrl: { type: graphql_1.GraphQLString }
+                profileUrl: { type: graphql_1.GraphQLString },
             },
             resolve: userResolver_1.updateUserResolver,
         },
@@ -109,7 +109,7 @@ const mutation = new graphql_1.GraphQLObjectType({
                 teacher: { type: graphql_1.GraphQLID }, // Assuming teacher id is of type GraphQLID
                 students: { type: new graphql_1.GraphQLList(graphql_1.GraphQLID) },
             },
-            resolve: courseResolver_1.updateCourseResolver
+            resolve: courseResolver_1.updateCourseResolver,
         },
         deleteUser: {
             type: UserType_1.ResponseType,
@@ -123,7 +123,7 @@ const mutation = new graphql_1.GraphQLObjectType({
             args: {
                 id: { type: graphql_1.GraphQLID },
             },
-            resolve: courseResolver_1.deleteCourseResolver
+            resolve: courseResolver_1.deleteCourseResolver,
         },
         auth: {
             type: UserType_1.AuthPayloadType,
