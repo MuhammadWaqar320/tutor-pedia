@@ -3,7 +3,7 @@ import { TeacherFeedbackInterface } from "../../interfaces/teacher";
 
 // Define the schema for the teacher feedback
 const TeacherFeedbackSchema = new Schema<Document&TeacherFeedbackInterface>({
-  student: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+  student: { type: Schema.Types.ObjectId, ref: 'Student', required: true },
   teacher: { type: Schema.Types.ObjectId, ref: 'Teacher', required: true },
   feedback: { type: String, required: true }, // The actual feedback provided by the student
   rating: { type: Number, required: true }, // A numerical rating provided by the student to evaluate the teacher

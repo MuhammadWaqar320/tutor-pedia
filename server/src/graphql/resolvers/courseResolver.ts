@@ -4,11 +4,11 @@ import { CourseInterface } from '../../interfaces/course';
 const courseService = new CourseService();
 
 export const getAllCoursesResolver = async () => {
-    return courseService.getAllData();
+    return courseService.getAllData(["teacher","students"],true);
 };
 
 export const getCourseByIdResolver = async (_: any, args: { id: string }) => {
-  return courseService.getDataById(args.id);
+  return courseService.getDataById(args.id,["teacher","students"],true);
 };
 
 export const createCourseResolver = async (_: any, args: CourseInterface) => {

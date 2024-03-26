@@ -7,16 +7,22 @@ class GenericService {
     constructor(repo) {
         this.repository = repo;
     }
-    async getDataById(id) {
+    async getDataById(id, populatedFields = [], isPopulated = false) {
         try {
+            if (isPopulated) {
+                return this.repository.getDataById(id, populatedFields, isPopulated);
+            }
             return this.repository.getDataById(id);
         }
         catch (error) {
             throw new Error(`An error occurred while processing your request, Error:${error}`);
         }
     }
-    async getAllData() {
+    async getAllData(populatedFields = [], isPopulated = false) {
         try {
+            if (isPopulated) {
+                return this.repository.getAllData(populatedFields, isPopulated);
+            }
             return this.repository.getAllData();
         }
         catch (error) {

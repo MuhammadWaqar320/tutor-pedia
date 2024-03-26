@@ -62,8 +62,8 @@ exports.UserType = new graphql_1.GraphQLObjectType({
             password: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) },
             phoneNo: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) },
             role: { type: new graphql_1.GraphQLNonNull(EnumType_1.UserRoleEnum) },
-            createdAt: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLInt) },
-            updatedAt: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLInt) },
+            createdAt: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLFloat) },
+            updatedAt: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLFloat) },
             profileUrl: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) },
         };
     },

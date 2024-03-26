@@ -5,10 +5,16 @@ class GenericRepo {
     constructor(model) {
         this.model = model;
     }
-    getDataById(id) {
+    getDataById(id, populatedFields = [], isPopulated = false) {
+        if (isPopulated) {
+            return this.model.findById(id).populate(populatedFields).exec();
+        }
         return this.model.findById(id).exec();
     }
-    getAllData() {
+    async getAllData(populatedFields = [], isPopulated = false) {
+        if (isPopulated) {
+            return this.model.find().populate(populatedFields).exec();
+        }
         return this.model.find().exec();
     }
     updateDataById(id, data) {

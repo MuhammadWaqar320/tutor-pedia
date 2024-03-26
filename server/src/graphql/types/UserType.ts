@@ -5,7 +5,7 @@ import {
   GraphQLNonNull,
   GraphQLID,
   GraphQLScalarType,
-  GraphQLInt,
+  GraphQLFloat,
 } from "graphql";
 import { UserRoleEnum } from "./EnumType";
 
@@ -57,7 +57,7 @@ export const AuthPayloadType = new GraphQLObjectType({
     };
   },
 });
-export const UserType = new GraphQLObjectType({
+export const UserType:GraphQLObjectType = new GraphQLObjectType({
   name: "User",
   fields: () => {
     return {
@@ -68,8 +68,8 @@ export const UserType = new GraphQLObjectType({
       password: { type: new GraphQLNonNull(GraphQLString) },
       phoneNo: { type: new GraphQLNonNull(GraphQLString) },
       role: { type: new GraphQLNonNull(UserRoleEnum) },
-      createdAt:{type: new GraphQLNonNull(GraphQLInt)},
-      updatedAt: { type: new GraphQLNonNull(GraphQLInt) },
+      createdAt:{type: new GraphQLNonNull(GraphQLFloat)},
+      updatedAt: { type: new GraphQLNonNull(GraphQLFloat) },
       profileUrl:{ type: new GraphQLNonNull(GraphQLString) },
     };
   },

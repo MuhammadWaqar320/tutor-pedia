@@ -1,6 +1,6 @@
 import lodash from "lodash";
 import GenericRepo from "../data/repo/genericRepo";
-import { Model, ModifyResult, IfAny, Document, Require_id } from "mongoose";
+import { Model, ModifyResult, IfAny, Document, Require_id,UnpackedIntersection } from "mongoose";
 import {
   successResponse,
   errorResponse,
@@ -14,13 +14,13 @@ class GenericService<T extends Document> {
     this.repository = repo;
   }
   async getDataById(
-    id: string
-  ): Promise<IfAny<
-    T,
-    any,
-    Document<unknown, {}, T> & Require_id<T>
-  > | null | void> {
+    id: string,
+    populatedFields:string[]=[],isPopulated:boolean=false
+  ): Promise<IfAny<T, any, Document<unknown, {}, T> & Require_id<T>> | UnpackedIntersection<IfAny<T, any, Document<unknown, {}, T> & Require_id<T>>, {}> | null> {
     try {
+      if (isPopulated) {
+        return this.repository.getDataById(id,populatedFields,isPopulated);
+      }
       return this.repository.getDataById(id);
     } catch (error) {
       throw new Error(
@@ -28,10 +28,12 @@ class GenericService<T extends Document> {
       );
     }
   }
-  async getAllData(): Promise<
-    IfAny<T, any, Document<unknown, {}, T> & Require_id<T>>[] | void
+  async getAllData(populatedFields:string[]=[],isPopulated:boolean=false): Promise<Omit<IfAny<T, any, Document<unknown, {}, T> & Require_id<T>>, never>[] | IfAny<T, any, Document<unknown, {}, T> & Require_id<T>>[]| void
   > {
     try {
+      if (isPopulated) {
+          return this.repository.getAllData(populatedFields,isPopulated);
+      }
       return this.repository.getAllData();
     } catch (error) {
       throw new Error(

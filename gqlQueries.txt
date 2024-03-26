@@ -1,0 +1,136 @@
+mutation {
+  createUser(
+    firstName: "waqas"
+    lastName: "khan"
+    email: "waqas@gmail.com"
+    password: "123456"
+    phoneNo: "03541243234"
+    role: Student
+    profileUrl: "sdfdsfsdfsdf"
+  ) {
+    success
+  }
+}
+/////////////////////////////
+{
+  getCourseById(id:"65f6cd3dec035e80699bff2d") {
+    id,
+    teacher{
+    bio
+  }
+  }
+}
+/////////////////////////
+{
+  getAllCourse {
+  name,
+    id,
+    teacher{
+    bio
+  }
+  }
+}
+//////////////////////////////////////////
+mutation {
+  createCourse(
+    name: "IS",
+    category: "mid-level",
+    description: "it is very good",
+    price: "324",
+    level: 1,
+    duration: "3 months",
+    preRequisites: "dsf",
+    updatedAt: 45654,
+    createdAt: 324234,
+    coverPhotoUrl: "sdfsdf",
+    language: "sdfds",
+    isCertified: false,
+    rating: 435,
+    startDate: 452344,
+    endDate: 23434,
+    teacher: "65f32c82cd24393b9d0d2436",
+    students: []
+  ) {
+    success
+  }
+}
+/////////////////////////////////////////////
+mutation {
+  updateCourse(
+    id:"65f6ccffec035e80699bff2b",
+    name: "IS-updated",
+    category: "mid-level",
+    description: "it is very good",
+    price: "324",
+    level: 1,
+    duration: "3 months",
+    preRequisites: "dsf",
+    updatedAt: 45654,
+    createdAt: 324234,
+    coverPhotoUrl: "sdfsdf",
+    language: "sdfds",
+    isCertified: false,
+    rating: 435,
+    startDate: 452344,
+    endDate: 23434,
+    teacher: "65f32c82cd24393b9d0d2436",
+    students: []
+  ) {
+    success
+  }
+}
+/////////////////////////////////////////////////
+mutation {
+  deleteCourse(
+    id:"65f6ccc2ec035e80699bff29",
+  ) {
+    success
+  }
+}
+////////////////////////////////////////////////
+{
+  getAllStudent {
+    updatedAt,
+    user,
+    id
+    
+  }
+}
+/////////////////////////////////////////////
+mutation {
+  createUser(
+    firstName: "waqas"
+    lastName: "khan"
+    email: "waqas@gmail.com"
+    password: "123456"
+    phoneNo: "03541243234"
+    role: Student
+    profileUrl: "sdfdsfsdfsdf"
+  ) {
+    success
+  }
+}
+////////////////////////////////////////////////
+{
+  getStudentById(id:"65f72d53e5bc0a08f8f53d63"){
+    id
+  }
+}
+//////////////////////////////////
+{
+  getAllTeacher {
+    updatedAt,
+    id, user{
+      firstName
+    }   
+  }
+}
+////////////////////////////////////////
+{
+  getAllTeacherFB {
+    rating,
+    student{
+     user{ firstName}
+    }
+  }
+}
