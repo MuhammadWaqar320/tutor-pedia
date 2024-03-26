@@ -1,7 +1,6 @@
 import gql from "graphql-tag";
 import { GraphQLClient } from "graphql-request";
 
-
 const graphQLClient = new GraphQLClient(
   process.env.NEXT_PUBLIC_SERVER_BASE_URL ?? ""
 );
@@ -23,9 +22,34 @@ export interface UserType {
   qualification?: string;
   specialization?: string;
 }
+
+export interface AddCourseType {
+  name: string;
+  category: string;
+  description: string;
+  price: string;
+  level: number;
+  duration: number;
+  preRequisites: string;
+  coverPhotoUrl: string;
+  language: string;
+  isCertified: boolean;
+  rating: number;
+  updatedAt?: number;
+  createdAt?: number;
+  startDate?: number;
+  endDate?: number;
+  students?: string;
+  teacher?: string;
+}
 interface CreateUserResponse {
-  success:boolean,
-  code:string
+  success: boolean;
+  code: string;
+}
+
+interface addNewCourseResponse {
+  success: boolean;
+  code: string;
 }
 
 const createUserMutation = gql`
@@ -36,10 +60,10 @@ const createUserMutation = gql`
     $password: String!
     $phoneNo: String!
     $role: UserRole!
-    $profileUrl:String!
-    $bio:String!
-    $qualification:String!
-    $specialization:String!
+    $profileUrl: String!
+    $bio: String!
+    $qualification: String!
+    $specialization: String!
   ) {
     createUser(
       firstName: $firstName
@@ -48,16 +72,62 @@ const createUserMutation = gql`
       password: $password
       phoneNo: $phoneNo
       role: $role
-      profileUrl:$profileUrl
-      bio:$bio
-      qualification:$qualification
-      specialization:$specialization
+      profileUrl: $profileUrl
+      bio: $bio
+      qualification: $qualification
+      specialization: $specialization
     ) {
       success
       code
     }
   }
 `;
+
+const CREATE_COURSE_MUTATION = gql`
+  mutation CreateCourse(
+    $name: String!
+    $category: String!
+    $description: String!
+    $price: String!
+    $level: Int!
+    $duration: String!
+    $preRequisites: String!
+    $updatedAt: Int!
+    $createdAt: Int!
+    $coverPhotoUrl: String!
+    $language: String!
+    $isCertified: Boolean!
+    $rating: Int!
+    $startDate: Int!
+    $endDate: Int!
+    $teacher: ID
+    $students: [ID]!
+  ) {
+    createCourse(
+      name: $name
+      category: $category
+      description: $description
+      price: $price
+      level: $level
+      duration: $duration
+      preRequisites: $preRequisites
+      updatedAt: $updatedAt
+      createdAt: $createdAt
+      coverPhotoUrl: $coverPhotoUrl
+      language: $language
+      isCertified: $isCertified
+      rating: $rating
+      startDate: $startDate
+      endDate: $endDate
+      teacher: $teacher
+      students: $students
+    ) {
+      success
+      code
+    }
+  }
+`;
+
 export const createNewUser = async (
   variables: UserType
 ): Promise<CreateUserResponse> => {
@@ -66,9 +136,25 @@ export const createNewUser = async (
       await graphQLClient.request(createUserMutation, {
         ...variables,
       });
-    
-    return response?.createUser ?? { success: false, code:""  };
+
+    return response?.createUser ?? { success: false, code: "" };
   } catch (error) {
+    throw error;
+  }
+};
+
+export const AddNewCourse = async (
+  variables: AddCourseType
+): Promise<addNewCourseResponse> => {
+  try {
+    const response: { createCourse?: addNewCourseResponse } =
+      await graphQLClient.request(CREATE_COURSE_MUTATION, {
+        ...variables,
+      });
+
+    return response?.createCourse ?? { success: false, code: "" };
+  } catch (error) {
+    console.log(error, "checkingsss");
     throw error;
   }
 };
