@@ -1,9 +1,5 @@
 import gql from "graphql-tag";
-import { GraphQLClient } from "graphql-request";
-
-const graphQLClient = new GraphQLClient(
-  process.env.NEXT_PUBLIC_SERVER_BASE_URL ?? ""
-);
+import { graphQLClient } from "@/config/gqlConfig";
 
 export enum UserRole {
   Admin = "Admin",

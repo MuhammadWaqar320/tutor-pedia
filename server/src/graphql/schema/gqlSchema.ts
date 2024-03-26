@@ -7,6 +7,7 @@ import {
   GraphQLList,
   GraphQLInt,
   GraphQLBoolean,
+  GraphQLFloat
 } from "graphql";
 import {
   getAllUserResolver,
@@ -103,23 +104,23 @@ const mutation = new GraphQLObjectType({
     createCourse: {
       type: ResponseType,
       args: {
-        name: { type: new GraphQLNonNull(GraphQLString) },
-        category: { type: new GraphQLNonNull(GraphQLString) },
-        description: { type: new GraphQLNonNull(GraphQLString) },
-        price: { type: new GraphQLNonNull(GraphQLString) },
-        level: { type: new GraphQLNonNull(GraphQLInt) },
-        duration: { type: new GraphQLNonNull(GraphQLString) },
-        preRequisites: { type: new GraphQLNonNull(GraphQLString) },
-        updatedAt: { type: new GraphQLNonNull(GraphQLInt) },
-        createdAt: { type: new GraphQLNonNull(GraphQLInt) },
-        coverPhotoUrl: { type: new GraphQLNonNull(GraphQLString) },
-        language: { type: new GraphQLNonNull(GraphQLString) },
-        isCertified: { type: new GraphQLNonNull(GraphQLBoolean) },
-        rating: { type: new GraphQLNonNull(GraphQLInt) },
-        startDate: { type: new GraphQLNonNull(GraphQLInt) },
-        endDate: { type: new GraphQLNonNull(GraphQLInt) },
-        teacher: { type: GraphQLID }, 
-        students: { type: new GraphQLList(GraphQLID) },
+         name: { type: new GraphQLNonNull(GraphQLString) },
+    category: { type: new GraphQLNonNull(GraphQLString) },
+    description: { type: new GraphQLNonNull(GraphQLString) },
+    price: { type: new GraphQLNonNull(GraphQLString) },
+    level: { type: new GraphQLNonNull(GraphQLInt) },
+    duration: { type: new GraphQLNonNull(GraphQLString) },
+    preRequisites: { type: new GraphQLNonNull(GraphQLString) },
+    updatedAt: { type: GraphQLFloat },
+    createdAt: { type: GraphQLFloat },
+    coverPhotoUrl: { type: new GraphQLNonNull(GraphQLString) },
+    language: { type: new GraphQLNonNull(GraphQLString) },
+    isCertified: { type: new GraphQLNonNull(GraphQLBoolean) },
+    rating: { type: new GraphQLNonNull(GraphQLFloat) },
+    startDate: { type: new GraphQLNonNull(GraphQLFloat) },
+    endDate: { type: new GraphQLNonNull(GraphQLFloat) },
+    teacher: { type: GraphQLID }, // Assuming teacher id is of type GraphQLID
+    students: { type: new GraphQLList(GraphQLID) },
       },
       resolve:createCourseResolver
     },
