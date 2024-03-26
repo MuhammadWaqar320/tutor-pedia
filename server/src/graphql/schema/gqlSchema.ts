@@ -6,14 +6,14 @@ import {
   GraphQLID,
   GraphQLList,
   GraphQLInt,
-  GraphQLBoolean
+  GraphQLBoolean,
 } from "graphql";
 import {
   getAllUserResolver,
   getUserByIdResolver,
   createUserResolver,
   updateUserResolver,
-  deleteUser
+  deleteUser,
 } from "../resolvers/userResolver";
 import { AuthResolver } from "../resolvers/authResolvers";
 import { UserRoleEnum } from "../types/EnumType";
@@ -25,6 +25,7 @@ import { getAllTeacherResolver, getTeacherByIdResolver } from "../resolvers/teac
 import { StudentType } from "../types/StudentType";
 import { getAllStudentResolver, getStudentByIdResolver, updateStudentResolver } from "../resolvers/studentResolver";
 import { createTeacherFeedbackResolver, deleteTeacherFeedbackResolver, getAllTeacherFeedbacksResolver, getTeacherFeedbackByIdResolver, updateTeacherFeedbackResolver } from "../resolvers/teacherFeedbackResolver";
+
 
 // GraphQL Query
 const query = new GraphQLObjectType({
@@ -41,7 +42,7 @@ const query = new GraphQLObjectType({
     },
     getAllCourse: {
       type: new GraphQLList(CourseType),
-      resolve:getAllCoursesResolver,
+      resolve: getAllCoursesResolver,
     },
     getCourseById: {
       type: CourseType,
@@ -100,25 +101,25 @@ const mutation = new GraphQLObjectType({
       resolve: createUserResolver,
     },
     createCourse: {
-      type:ResponseType,
+      type: ResponseType,
       args: {
-         name: { type: new GraphQLNonNull(GraphQLString) },
-    category: { type: new GraphQLNonNull(GraphQLString) },
-    description: { type: new GraphQLNonNull(GraphQLString) },
-    price: { type: new GraphQLNonNull(GraphQLString) },
-    level: { type: new GraphQLNonNull(GraphQLInt) },
-    duration: { type: new GraphQLNonNull(GraphQLString) },
-    preRequisites: { type: new GraphQLNonNull(GraphQLString) },
-    updatedAt: { type: new GraphQLNonNull(GraphQLInt) },
-    createdAt: { type: new GraphQLNonNull(GraphQLInt) },
-    coverPhotoUrl: { type: new GraphQLNonNull(GraphQLString) },
-    language: { type: new GraphQLNonNull(GraphQLString) },
-    isCertified: { type: new GraphQLNonNull(GraphQLBoolean) },
-    rating: { type: new GraphQLNonNull(GraphQLInt) },
-    startDate: { type: new GraphQLNonNull(GraphQLInt) },
-    endDate: { type: new GraphQLNonNull(GraphQLInt) },
-    teacher: { type: GraphQLID }, // Assuming teacher id is of type GraphQLID
-    students: { type: new GraphQLList(GraphQLID) },
+        name: { type: new GraphQLNonNull(GraphQLString) },
+        category: { type: new GraphQLNonNull(GraphQLString) },
+        description: { type: new GraphQLNonNull(GraphQLString) },
+        price: { type: new GraphQLNonNull(GraphQLString) },
+        level: { type: new GraphQLNonNull(GraphQLInt) },
+        duration: { type: new GraphQLNonNull(GraphQLString) },
+        preRequisites: { type: new GraphQLNonNull(GraphQLString) },
+        updatedAt: { type: new GraphQLNonNull(GraphQLInt) },
+        createdAt: { type: new GraphQLNonNull(GraphQLInt) },
+        coverPhotoUrl: { type: new GraphQLNonNull(GraphQLString) },
+        language: { type: new GraphQLNonNull(GraphQLString) },
+        isCertified: { type: new GraphQLNonNull(GraphQLBoolean) },
+        rating: { type: new GraphQLNonNull(GraphQLInt) },
+        startDate: { type: new GraphQLNonNull(GraphQLInt) },
+        endDate: { type: new GraphQLNonNull(GraphQLInt) },
+        teacher: { type: GraphQLID }, 
+        students: { type: new GraphQLList(GraphQLID) },
       },
       resolve:createCourseResolver
     },
@@ -132,7 +133,7 @@ const mutation = new GraphQLObjectType({
         password: { type: GraphQLString },
         phoneNo: { type: GraphQLString },
         role: { type: UserRoleEnum },
-        profileUrl:{ type: GraphQLString }
+        profileUrl: { type: GraphQLString },
       },
       resolve: updateUserResolver,
     },
@@ -149,26 +150,26 @@ const mutation = new GraphQLObjectType({
     updateCourse: {
       type: ResponseType,
       args: {
-         id: { type: GraphQLID },
-         name: { type: new GraphQLNonNull(GraphQLString) },
-    category: { type: new GraphQLNonNull(GraphQLString) },
-    description: { type: new GraphQLNonNull(GraphQLString) },
-    price: { type: new GraphQLNonNull(GraphQLString) },
-    level: { type: new GraphQLNonNull(GraphQLInt) },
-    duration: { type: new GraphQLNonNull(GraphQLString) },
-    preRequisites: { type: new GraphQLNonNull(GraphQLString) },
-    updatedAt: { type: new GraphQLNonNull(GraphQLInt) },
-    createdAt: { type: new GraphQLNonNull(GraphQLInt) },
-    coverPhotoUrl: { type: new GraphQLNonNull(GraphQLString) },
-    language: { type: new GraphQLNonNull(GraphQLString) },
-    isCertified: { type: new GraphQLNonNull(GraphQLBoolean) },
-    rating: { type: new GraphQLNonNull(GraphQLInt) },
-    startDate: { type: new GraphQLNonNull(GraphQLInt) },
-    endDate: { type: new GraphQLNonNull(GraphQLInt) },
-    teacher: { type: GraphQLID }, // Assuming teacher id is of type GraphQLID
-    students: { type: new GraphQLList(GraphQLID) },
+        id: { type: GraphQLID },
+        name: { type: new GraphQLNonNull(GraphQLString) },
+        category: { type: new GraphQLNonNull(GraphQLString) },
+        description: { type: new GraphQLNonNull(GraphQLString) },
+        price: { type: new GraphQLNonNull(GraphQLString) },
+        level: { type: new GraphQLNonNull(GraphQLInt) },
+        duration: { type: new GraphQLNonNull(GraphQLString) },
+        preRequisites: { type: new GraphQLNonNull(GraphQLString) },
+        updatedAt: { type: new GraphQLNonNull(GraphQLInt) },
+        createdAt: { type: new GraphQLNonNull(GraphQLInt) },
+        coverPhotoUrl: { type: new GraphQLNonNull(GraphQLString) },
+        language: { type: new GraphQLNonNull(GraphQLString) },
+        isCertified: { type: new GraphQLNonNull(GraphQLBoolean) },
+        rating: { type: new GraphQLNonNull(GraphQLInt) },
+        startDate: { type: new GraphQLNonNull(GraphQLInt) },
+        endDate: { type: new GraphQLNonNull(GraphQLInt) },
+        teacher: { type: GraphQLID }, // Assuming teacher id is of type GraphQLID
+        students: { type: new GraphQLList(GraphQLID) },
       },
-      resolve:updateCourseResolver
+      resolve: updateCourseResolver,
     },
     deleteUser: {
       type: ResponseType,
@@ -180,9 +181,9 @@ const mutation = new GraphQLObjectType({
     deleteCourse: {
       type: ResponseType,
       args: {
-         id: { type: GraphQLID },
+        id: { type: GraphQLID },
       },
-      resolve:deleteCourseResolver
+      resolve: deleteCourseResolver,
     },
     auth: {
       type: AuthPayloadType,
@@ -224,7 +225,6 @@ const mutation = new GraphQLObjectType({
 
   },
 });
-
 
 // Creating Graphql schema
 const Schema = new GraphQLSchema({
