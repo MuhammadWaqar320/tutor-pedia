@@ -7,7 +7,7 @@ const Courses = () => {
 
    return (
      <DashboardLayout menuItemList={studentDashboardMenuItem}>
-       <>course123</>
+       <>student course 123</>
      </DashboardLayout>
    );
  

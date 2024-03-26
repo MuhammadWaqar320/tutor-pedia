@@ -1,4 +1,4 @@
-import Button from '@mui/material/Button';
+import Button from "@mui/material/Button";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
@@ -104,19 +104,21 @@ const SignUpForm = () => {
           <Form.Control type="text" placeholder="Postal code" required />
         </Form.Group>
       </Row>
-      <Row className="mb-3" >
+      <Row className="mb-3">
         <Form.Group as={Col} controlId="formGridEmail">
-         <Row style={{ display: "flex", alignItems: "center" }}> 
-             <Form.Group as={Col} xs={3} controlId="formGridPhoneNo" style={{paddingTop:"5px"}}  >
-   <Form.Label>CV/Resume</Form.Label>
-                </Form.Group>
-           <Form.Group as={Col} xs={9} controlId="formGridPhoneNo">
-  <Form.Control type="file"  accept=".pdf,.doc" required />
-                </Form.Group>
-           </Row>
-
-
-        
+          <Row style={{ display: "flex", alignItems: "center" }}>
+            <Form.Group
+              as={Col}
+              xs={3}
+              controlId="formGridPhoneNo"
+              style={{ paddingTop: "5px" }}
+            >
+              <Form.Label>CV/Resume</Form.Label>
+            </Form.Group>
+            <Form.Group as={Col} xs={9} controlId="formGridPhoneNo">
+              <Form.Control type="file" accept=".pdf,.doc" required />
+            </Form.Group>
+          </Row>
         </Form.Group>
         <Form.Group as={Col} controlId="formGridPhoneNo">
           <Form.Control type="text" placeholder="Postal code" required />
@@ -125,12 +127,14 @@ const SignUpForm = () => {
       <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
         <Form.Control as="textarea" rows={2} placeholder="About your self" />
       </Form.Group>
-<div style={{ display: 'flex', justifyContent: 'center' }}>
-  <Button variant="contained" style={{ background: 'blue',width:"300px",borderRadius:"20px" }}>
-    Contained
-  </Button>
-</div>
-   
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        <Button
+          variant="contained"
+          style={{ background: "blue", width: "300px", borderRadius: "20px" }}
+        >
+          Contained
+        </Button>
+      </div>
     </Form>
   );
 };

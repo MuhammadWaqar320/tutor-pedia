@@ -116,7 +116,7 @@ const mutation = new graphql_1.GraphQLObjectType({
                 password: { type: graphql_1.GraphQLString },
                 phoneNo: { type: graphql_1.GraphQLString },
                 role: { type: EnumType_1.UserRoleEnum },
-                profileUrl: { type: graphql_1.GraphQLString }
+                profileUrl: { type: graphql_1.GraphQLString },
             },
             resolve: userResolver_1.updateUserResolver,
         },
@@ -152,7 +152,7 @@ const mutation = new graphql_1.GraphQLObjectType({
                 teacher: { type: graphql_1.GraphQLID }, // Assuming teacher id is of type GraphQLID
                 students: { type: new graphql_1.GraphQLList(graphql_1.GraphQLID) },
             },
-            resolve: courseResolver_1.updateCourseResolver
+            resolve: courseResolver_1.updateCourseResolver,
         },
         deleteUser: {
             type: UserType_1.ResponseType,
@@ -166,7 +166,7 @@ const mutation = new graphql_1.GraphQLObjectType({
             args: {
                 id: { type: graphql_1.GraphQLID },
             },
-            resolve: courseResolver_1.deleteCourseResolver
+            resolve: courseResolver_1.deleteCourseResolver,
         },
         auth: {
             type: UserType_1.AuthPayloadType,
