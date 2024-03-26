@@ -10,7 +10,18 @@ class TeacherFeedbackService extends GenericService<TeacherFeedbackInterface & D
   constructor() {
     super(TeacherFeedbackRepo);
   }
-
+  async addTeacherFeedback(data:TeacherFeedbackInterface) {
+     try {
+        const dbResponse = await TeacherFeedbackRepo.addTeacherFeedback(data);
+        return successResponse(dbResponse, "Created");
+    } catch (error) {
+      return errorResponse(
+        `An error occurred while processing your request, Error: ${error}`,
+        null,
+        null
+      );
+    }
+  }
   // Add specific functionalities for teacher feedback service here
 }
 

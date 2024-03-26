@@ -7,6 +7,11 @@ const EnumType_1 = require("../types/EnumType");
 const UserType_1 = require("../types/UserType");
 const CourseType_1 = require("../types/CourseType");
 const courseResolver_1 = require("../resolvers/courseResolver");
+const TeacherType_1 = require("../types/TeacherType");
+const teacherResolver_1 = require("../resolvers/teacherResolver");
+const StudentType_1 = require("../types/StudentType");
+const studentResolver_1 = require("../resolvers/studentResolver");
+const teacherFeedbackResolver_1 = require("../resolvers/teacherFeedbackResolver");
 // GraphQL Query
 const query = new graphql_1.GraphQLObjectType({
     name: "Query",
@@ -26,7 +31,35 @@ const query = new graphql_1.GraphQLObjectType({
         },
         getCourseById: {
             type: CourseType_1.CourseType,
+            args: { id: { type: graphql_1.GraphQLID } },
             resolve: courseResolver_1.getCourseByIdResolver
+        },
+        getAllTeacher: {
+            type: new graphql_1.GraphQLList(TeacherType_1.TeacherType),
+            resolve: teacherResolver_1.getAllTeacherResolver
+        },
+        getTeacherById: {
+            type: TeacherType_1.TeacherType,
+            args: { id: { type: graphql_1.GraphQLID } },
+            resolve: teacherResolver_1.getTeacherByIdResolver
+        },
+        getAllStudent: {
+            type: new graphql_1.GraphQLList(StudentType_1.StudentType),
+            resolve: studentResolver_1.getAllStudentResolver
+        },
+        getAllTeacherFB: {
+            type: new graphql_1.GraphQLList(TeacherType_1.TeacherFeedbackType),
+            resolve: teacherFeedbackResolver_1.getAllTeacherFeedbacksResolver
+        },
+        getStudentById: {
+            type: StudentType_1.StudentType,
+            args: { id: { type: graphql_1.GraphQLID } },
+            resolve: studentResolver_1.getStudentByIdResolver
+        },
+        getTeacherFbById: {
+            type: TeacherType_1.TeacherFeedbackType,
+            args: { id: { type: graphql_1.GraphQLID } },
+            resolve: teacherFeedbackResolver_1.getTeacherFeedbackByIdResolver
         }
     },
 });
@@ -44,9 +77,9 @@ const mutation = new graphql_1.GraphQLObjectType({
                 phoneNo: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) },
                 role: { type: new graphql_1.GraphQLNonNull(EnumType_1.UserRoleEnum) },
                 profileUrl: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) },
-                bio: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) },
-                qualification: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) },
-                specialization: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) }
+                bio: { type: graphql_1.GraphQLString },
+                qualification: { type: graphql_1.GraphQLString },
+                specialization: { type: graphql_1.GraphQLString }
             },
             resolve: userResolver_1.createUserResolver,
         },
@@ -86,6 +119,16 @@ const mutation = new graphql_1.GraphQLObjectType({
                 profileUrl: { type: graphql_1.GraphQLString }
             },
             resolve: userResolver_1.updateUserResolver,
+        },
+        updateStudent: {
+            type: StudentType_1.StudentType,
+            args: {
+                updatedAt: { type: graphql_1.GraphQLInt },
+                courses: { type: new graphql_1.GraphQLList(graphql_1.GraphQLID) },
+                user: { type: graphql_1.GraphQLID },
+                teachers: { type: new graphql_1.GraphQLList(graphql_1.GraphQLID) }
+            },
+            resolve: studentResolver_1.updateStudentResolver
         },
         updateCourse: {
             type: UserType_1.ResponseType,
@@ -132,6 +175,35 @@ const mutation = new graphql_1.GraphQLObjectType({
                 password: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) },
             },
             resolve: authResolvers_1.AuthResolver,
+        },
+        createTeacherFeedback: {
+            type: UserType_1.ResponseType,
+            args: {
+                student: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLID) }, // Assuming student id is of type GraphQLID
+                teacher: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLID) }, // Assuming teacher id is of type GraphQLID
+                feedback: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) },
+                rating: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLInt) },
+                feedbackDate: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLInt) } // Assuming feedbackDate is of type GraphQLInt
+            },
+            resolve: teacherFeedbackResolver_1.createTeacherFeedbackResolver
+        },
+        updateTeacherFeedback: {
+            type: UserType_1.ResponseType,
+            args: {
+                student: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLID) }, // Assuming student id is of type GraphQLID
+                teacher: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLID) }, // Assuming teacher id is of type GraphQLID
+                feedback: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) },
+                rating: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLInt) },
+                feedbackDate: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLInt) } // Assuming feedbackDate is of type GraphQLInt
+            },
+            resolve: teacherFeedbackResolver_1.updateTeacherFeedbackResolver
+        },
+        deleteTeacherFeedback: {
+            type: UserType_1.ResponseType,
+            args: {
+                id: { type: graphql_1.GraphQLID },
+            },
+            resolve: teacherFeedbackResolver_1.deleteTeacherFeedbackResolver
         },
     },
 });

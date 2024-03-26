@@ -1,15 +1,21 @@
-import { Model,ModifyResult, IfAny, Document, Require_id } from "mongoose";
+import { Model,ModifyResult, IfAny, Document, Require_id,UnpackedIntersection } from "mongoose";
 
 class GenericRepo<T extends Document> {
   protected model: Model<T>;
   constructor(model: Model<T>) {
     this.model = model;
   }
-  getDataById(id: string): Promise<IfAny<T, any, Document<unknown, {}, T> & Require_id<T>> | null> {
+  getDataById(id: string,populatedFields:string[]=[],isPopulated:boolean=false): Promise<UnpackedIntersection<IfAny<T, any, Document<unknown, {}, T> & Require_id<T>>, {}> | IfAny<T, any, Document<unknown, {}, T> & Require_id<T>> | null> {
+    if (isPopulated) {
+       return this.model.findById(id).populate(populatedFields).exec();
+    }
     return this.model.findById(id).exec();
   }
-  getAllData():Promise<IfAny<T, any, Document<unknown, {}, T> & Require_id<T>>[]> {
-    return this.model.find().exec();
+ async getAllData(populatedFields:string[]=[],isPopulated:boolean=false):Promise<Omit<IfAny<T, any, Document<unknown, {}, T> & Require_id<T>>, never>[] |IfAny<T, any, Document<unknown, {}, T> & Require_id<T>>[] > {
+   if (isPopulated) {
+    return this.model.find().populate(populatedFields).exec();
+  }
+  return this.model.find().exec();
   }
   updateDataById(id: string, data: any):Promise<IfAny<T, any, Document<unknown, {}, T> & Require_id<T>> | null> {
     return this.model
