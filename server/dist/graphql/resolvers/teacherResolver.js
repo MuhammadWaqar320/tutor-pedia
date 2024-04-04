@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteTeacher = exports.updateTeacherResolver = exports.getTeacherByIdResolver = exports.getAllTeacherResolver = void 0;
+exports.deleteTeacherResolver = exports.updateTeacherResolver = exports.getTeacherByIdResolver = exports.getAllTeacherResolver = void 0;
 const teacherService_1 = __importDefault(require("../../services/teacherService"));
 const TeacherService = new teacherService_1.default();
 const getAllTeacherResolver = async () => {
@@ -18,7 +18,7 @@ const updateTeacherResolver = async (_, args) => {
     return TeacherService.updateDataById(args.id, args);
 };
 exports.updateTeacherResolver = updateTeacherResolver;
-const deleteTeacher = async (_, args) => {
+const deleteTeacherResolver = async (_, args) => {
     return TeacherService.deleteById(args.id);
 };
-exports.deleteTeacher = deleteTeacher;
+exports.deleteTeacherResolver = deleteTeacherResolver;

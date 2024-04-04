@@ -18,23 +18,29 @@ import { uploadFileToFBStorageAndGetURL } from "@/api/common";
 import { useRouter } from "next/navigation";
 import { Container } from "../../../../styles/newCourseFormStyle";
 import DashboardLayout from "@/components/DashboardLayout";
+import { CourseType } from "@/api/course";
+import { TeacherType } from "@/api/teacher";
 
 const NewCourse = () => {
   const router = useRouter();
-  const [userData, setUserData] = useState<AddCourseType>({
+  const [courseData, setCourseData] = useState<CourseType>({
     name: "",
-    category: "Javascript",
+    category: "",
     description: "",
     price: "",
-    level: 0,
-    duration: 0,
+    level: 1,
+    duration: "",
     preRequisites: "",
     coverPhotoUrl: "",
-    language: "English",
-    rating: 0,
-    isCertified: true,
+    language: "",
+    isCertified: false,
+    rating: 0.0,
+    startDate: 0,
+    endDate: 0,
+    teacher: "",
   });
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [teachers,setTeachers]=useState<TeacherType[]>([])
   const [file, setFile] = useState<File | null>(null);
   const {
     errors,
@@ -44,9 +50,9 @@ const NewCourse = () => {
     setFieldValue,
     setFieldTouched,
   } = useFormik({
-    initialValues: userData,
+    initialValues: courseData,
     validationSchema: validationSchema,
-    onSubmit: async (values: AddCourseType) => {
+    onSubmit: async (values: CourseType) => {
       try {
         setIsLoading(true);
         const { url, success } = await uploadFileToFBStorageAndGetURL(
@@ -56,47 +62,49 @@ const NewCourse = () => {
 
         if (success) {
           const level = (values.level, 10);
-          const response = await AddNewCourse({
-            ...values,
-            level,
-            coverPhotoUrl: "url",
-            updatedAt: Math.floor(Date.now() / 1000), 
-            createdAt: Math.floor(Date.now() / 1000),
-            rating: 0,
-            startDate: Math.floor(Date.now() / 1000),
-            endDate: Math.floor(Date.now() / 1000),
-            teacher: values.teacher == "Samad" ? "65f98fee7955bcc114f6fc81" : "" ,
-            students: values.students == "Samad" ? "65fb16b87955bcc114f6fc8f" : "" ,
-          });
+          // const response = await AddNewCourse({
+          //   ...values,
+          //   level,
+          //   coverPhotoUrl: "url",
+          //   updatedAt: Math.floor(Date.now() / 1000),
+          //   createdAt: Math.floor(Date.now() / 1000),
+          //   rating: 0,
+          //   startDate: Math.floor(Date.now() / 1000),
+          //   endDate: Math.floor(Date.now() / 1000),
+          //   teacher:
+          //     values.teacher == "Samad" ? "65f98fee7955bcc114f6fc81" : "",
+          //   students:
+          //     values.students == "Samad" ? "65fb16b87955bcc114f6fc8f" : "",
+          // });
 
-          console.log(response, "values");
+          // console.log(response, "values");
 
-          if (response?.success) {
-            console.log(values, "values");
+          // if (response?.success) {
+          //   console.log(values, "values");
 
-            setIsLoading(false);
-            setUserData({
-              name: "",
-              category: "",
-              description: "",
-              price: "",
-              level: 0,
-              duration: 0,
-              preRequisites: "",
-              coverPhotoUrl: "",
-              language: "",
-              rating: 0,
-              isCertified: true,
-            });
-            toastSuccessMessage("Course added successfully.");
-            router.push("/");
-          } else if (
-            response?.code === gqlErrorCodes.alreadyExist &&
-            !response?.success
-          ) {
-            setIsLoading(false);
-            toastErrMessage("Course is already exist.");
-          }
+          //   setIsLoading(false);
+          //   setUserData({
+          //     name: "",
+          //     category: "",
+          //     description: "",
+          //     price: "",
+          //     level: 0,
+          //     duration: 0,
+          //     preRequisites: "",
+          //     coverPhotoUrl: "",
+          //     language: "",
+          //     rating: 0,
+          //     isCertified: true,
+          //   });
+          //   toastSuccessMessage("Course added successfully.");
+          //   router.push("/");
+          // } else if (
+          //   response?.code === gqlErrorCodes.alreadyExist &&
+          //   !response?.success
+          // ) {
+          //   setIsLoading(false);
+          //   toastErrMessage("Course is already exist.");
+          // }
         } else {
           setIsLoading(false);
           toastErrMessage("An error occurred while uploading the picture.");
@@ -107,8 +115,6 @@ const NewCourse = () => {
       }
     },
   });
-
-
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -294,11 +300,13 @@ const NewCourse = () => {
               name="teacher"
               onChange={handleOnSelect}
             >
-              <option value={"Samad"}> Samad Saleem</option>
-              <option value={"Waqar"}>Waqar Khan</option>
+              {teachers.map((teacher:TeacherType, index) => (
+                <option key={index} value={teacher?.name}>
+                  {teacher?.name}
+                </option>
+              ))}
             </Form.Select>
           </Form.Group>
-
 
           <Form.Group
             as={Col}
@@ -316,8 +324,6 @@ const NewCourse = () => {
               <option value={"Waqar"}>Waqar Khan</option>
             </Form.Select>
           </Form.Group>
-
-          
 
           <Form.Group as={Col} controlId="formGridName" className="mb-1.5">
             <Form.Label className="mb-0.5">Upload Cover Photo:</Form.Label>

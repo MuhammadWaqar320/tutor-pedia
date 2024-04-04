@@ -159,7 +159,21 @@ const mutation = new graphql_1.GraphQLObjectType({
             args: {
                 id: { type: graphql_1.GraphQLID },
             },
-            resolve: userResolver_1.deleteUser,
+            resolve: userResolver_1.deleteUserResolver,
+        },
+        deleteStudent: {
+            type: UserType_1.ResponseType,
+            args: {
+                id: { type: graphql_1.GraphQLID }
+            },
+            resolve: studentResolver_1.deleteStudentResolver,
+        },
+        deleteTeacher: {
+            type: UserType_1.ResponseType,
+            args: {
+                id: { type: graphql_1.GraphQLID }
+            },
+            resolve: teacherResolver_1.deleteTeacherResolver
         },
         deleteCourse: {
             type: UserType_1.ResponseType,

@@ -4,6 +4,7 @@ export const appRoute = {
     COURSES: "/courses",
     SIGN_UP: "/signUp",
     HOME: "/",
+    GIGS:"/teachers"
   },
   DASHBOARDS: {
     STUDENT: {
@@ -14,9 +15,13 @@ export const appRoute = {
       DASHBOARD: "/dashboards/teacher",
     },
     ADMIN: {
-      DASHBOARD: "/dashboards/admin",
+      PROFILE: "/dashboards/admin/profile",
       COURSES: "/dashboards/admin/courses",
       NEWCOURSE: "/dashboards/admin/newcourse",
+      TEACHERS: '/dashboards/admin/teachers',
+      STUDENTS: '/dashboards/admin/students',
+      PAYMENT: "/dashboards/admin/payment",
+      RATING:"/dashboards/admin/rating",
     },
   },
 };

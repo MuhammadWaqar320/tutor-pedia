@@ -7,6 +7,7 @@ export enum UserRole {
   Student = "Student",
 }
 export interface UserType {
+  id: string;
   firstName: string;
   lastName: string;
   email: string;
@@ -138,6 +139,24 @@ export const createNewUser = async (
     throw error;
   }
 };
+
+
+const deleteQuery = gql`
+mutation deleteUser($id:ID){
+  deleteUser(id:$id){
+    success
+  }
+}
+`;
+
+export const deleteUser = async (id:string): Promise<{success:boolean}|undefined> => {
+  try {
+    const response: any = await graphQLClient.request(deleteQuery,{id});
+    return response.deleteUser;
+  } catch (error) {
+     console.log(`An error occurred while deleting data. Due to this error:${error}`);
+  }
+}
 
 export const AddNewCourse = async (
   variables: AddCourseType

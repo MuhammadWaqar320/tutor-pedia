@@ -4,7 +4,7 @@ import gql from "graphql-tag";
 import { graphQLClient } from "@/config/gqlConfig";
 
 export interface CourseType {
-  id: string;
+  id?: string;
     name: string;
     category: string;
     description: string;
@@ -12,16 +12,16 @@ export interface CourseType {
     level: number;
     duration:string;
     preRequisites:string;
-    upatedAt: number;
-    createAt: number;
+    upatedAt?: number;
+    createAt?: number;
     coverPhotoUrl:string;
     language: string;
     isCertified: boolean;
-    rating: number;
+    rating?: number;
     startDate: number;
     endDate: number;
-    teacher: TeacherType;
-    students: StudentType[];
+    teacher: TeacherType|string;
+    students?: StudentType[];
 }
   
 const gqlQuery = gql`
@@ -53,6 +53,13 @@ query getAllCourse {
   }
 }
 `;
+const deleteQuery = gql`
+mutation deleteCourse($id:ID){
+  deleteCourse(id:$id){
+    success
+  }
+}
+`;
 
 export const getCourses = async():Promise<CourseType[]|undefined> => {
     try {
@@ -63,3 +70,11 @@ export const getCourses = async():Promise<CourseType[]|undefined> => {
     }
 }
 
+export const deleteCourse = async (id:string): Promise<{success:boolean}|undefined> => {
+  try {
+    const response: any = await graphQLClient.request(deleteQuery,{id});
+    return response.deleteCourse;
+  } catch (error) {
+     console.log(`An error occurred while deleting data. Due to this error:${error}`);
+  }
+}

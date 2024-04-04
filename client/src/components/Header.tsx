@@ -75,6 +75,12 @@ const Header = () => {
       route: appRoute.PUBLIC_ROUTES.COURSES,
       icon: <ListAltIcon />,
     },
+    {
+      id: 4,
+      title: "Gigs",
+      route: appRoute.PUBLIC_ROUTES.GIGS,
+      icon: <ListAltIcon />,
+    },
   ];
   const listItem: ListItemType[] = [
     {
@@ -112,6 +118,13 @@ const Header = () => {
         router.push("/signUp");
       },
     },
+    {
+      id: 6,
+      title: "Gigs",
+      handleOnClick: () => {
+        router.push("/teachers");
+      },
+    },
   ];
 
   const handleOpen = () => setOpen(true);
@@ -127,7 +140,7 @@ const Header = () => {
   };
   const handleDashboard = () => {
     if (user?.role === userRole.admin) {
-      router.push(appRoute.DASHBOARDS.ADMIN.DASHBOARD);
+      router.push(appRoute.DASHBOARDS.ADMIN.COURSES);
     } else if (user?.role === userRole.student) {
       router.push(appRoute.DASHBOARDS.STUDENT.DASHBOARD);
     } else if (user?.role === userRole.teacher) {

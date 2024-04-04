@@ -9,33 +9,34 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { deleteCourse, getCourses } from "@/api/course";
-import { CourseType } from "@/api/course";
+import { getAllTeachers } from "@/api/teacher";
+import { TeacherType } from "@/api/teacher";
 import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
-
-const Courses = () => {
-  const [courses, setCourses] = useState<CourseType[]>([]);
+import { deleteTeacher } from "@/api/teacher";
+import { deleteUser } from "@/api/user";
+const Teachers = () => {
+  const [teachers, setTeachers] = useState<TeacherType[]>([]);
   const [isUpdated, setIsUpdated] = useState<boolean>(false);
 
-  const fetchCourses = async () => {
-    const data = await getCourses();
+  const fetchTeachers = async () => {
+    const data = await getAllTeachers();
     if (data) {
-      setCourses(data);
+      setTeachers(data);
     } else {
-      alert("An error occurred while fetching courses.");
+      alert("An error occurred while fetching teachers.");
     }
   };
 
   useEffect(() => {
-    fetchCourses();
+    fetchTeachers();
   }, [isUpdated]);
 
-  const handleDelete = async (id: string): Promise<void> => {
+  const handleDelete = async (id: string, userId: string): Promise<void> => {
     try {
-      const response = await deleteCourse(id);
-      if (response?.success) {
+      const response = await deleteTeacher(id);
+      const res = await deleteUser(userId);
+      if (response?.success && res?.success) {
         setIsUpdated(true);
         alert("Data has been deleted");
       }
@@ -55,31 +56,28 @@ const Courses = () => {
             fontSize: "18px",
           }}
         >
-          Courses
+          Teachers
         </h2>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
               <TableCell align="center" style={{ fontWeight: "bold" }}>
-                Name
+                First Name
               </TableCell>
               <TableCell align="center" style={{ fontWeight: "bold" }}>
-                Category
+                Last Name
               </TableCell>
               <TableCell align="center" style={{ fontWeight: "bold" }}>
-                course Level
+                Email
               </TableCell>
               <TableCell align="center" style={{ fontWeight: "bold" }}>
-                Language
+                Phone No
               </TableCell>
               <TableCell align="center" style={{ fontWeight: "bold" }}>
-                IsCertified
+                Qualification
               </TableCell>
               <TableCell align="center" style={{ fontWeight: "bold" }}>
-                Duration
-              </TableCell>
-              <TableCell align="center" style={{ fontWeight: "bold" }}>
-                Price
+                Specialization
               </TableCell>
               <TableCell align="center" style={{ fontWeight: "bold" }}>
                 Delete
@@ -87,20 +85,17 @@ const Courses = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {courses.map((course: CourseType) => (
+            {teachers.map((teacher: TeacherType) => (
               <TableRow
-                key={course.name}
+                key={teacher.id}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
-                <TableCell align="center">{course.name}</TableCell>
-                <TableCell align="center">{course.category}</TableCell>
-                <TableCell align="center">{course.level}</TableCell>
-                <TableCell align="center">{course.language}</TableCell>
-                <TableCell align="center">
-                  {course.isCertified ? "Yes" : "No"}
-                </TableCell>
-                <TableCell align="center">{course.duration}</TableCell>
-                <TableCell align="center">{course.price}</TableCell>
+                <TableCell align="center">{teacher.user.firstName}</TableCell>
+                <TableCell align="center">{teacher.user.lastName}</TableCell>
+                <TableCell align="center">{teacher.user.email}</TableCell>
+                <TableCell align="center">{teacher.user.phoneNo}</TableCell>
+                <TableCell align="center">{teacher.qualification}</TableCell>
+                <TableCell align="center">{teacher.specialization}</TableCell>
                 <TableCell align="center">
                   {" "}
                   <button
@@ -109,7 +104,7 @@ const Courses = () => {
                       background: "transparent",
                       color: "red",
                     }}
-                    onClick={() => handleDelete(course?.id ?? "")}
+                    onClick={() => handleDelete(teacher.id, teacher.user.id)}
                   >
                     <DeleteIcon />
                   </button>
@@ -123,4 +118,4 @@ const Courses = () => {
   );
 };
 
-export default Courses;
+export default Teachers;

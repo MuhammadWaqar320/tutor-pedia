@@ -4,7 +4,7 @@ import Image from "next/image";
 import { LandingPageContainer } from "../styles/landingPageInfo.style";
 
 interface LandingSectionProps {
-  imageSrc: string; 
+  imageSrc: string;
   heading: string;
   text: string;
   bullets: string[];
@@ -21,7 +21,7 @@ function LandingSection({
   spanText,
 }: LandingSectionProps) {
   return (
-    <Box className={`main ${reverseOrder ? "reverse-order" : ""}`}>
+    <Box className={`main ${reverseOrder ? "reverse-order" : ""}`} style={{borderTop:"1px solid silver"}}>
       {!reverseOrder && (
         <Image
           src={imageSrc}
@@ -69,19 +69,18 @@ function LandingInfoSection() {
         ]}
         spanText="Our experiential technical and soft skills training empower IT professionals with a winning combination of technical expertise and essential soft skills demanded by industry"
       />
-
-      <LandingSection
-        imageSrc="/images/2.png"
-        heading="Fast track your career"
-        text="Blast off towards a successful career! Our fast-track program is designed for CS and IT fields with basic and advanced computer science knowledge. In our"
-        bullets={[
-          "12 weeks boot camp",
-          "360 hours of hands-on training",
-          "Set your course to success",
-        ]}
-        spanText="Buckle up and get ready to set your sights on success as our industry-driven curriculum prepares you to conquer the global IT workforce."
-        reverseOrder
-      />
+        <LandingSection
+          imageSrc="/images/2.png"
+          heading="Fast track your career"
+          text="Blast off towards a successful career! Our fast-track program is designed for CS and IT fields with basic and advanced computer science knowledge. In our"
+          bullets={[
+            "12 weeks boot camp",
+            "360 hours of hands-on training",
+            "Set your course to success",
+          ]}
+          spanText="Buckle up and get ready to set your sights on success as our industry-driven curriculum prepares you to conquer the global IT workforce."
+          reverseOrder
+        />
 
       <LandingSection
         imageSrc="/images/3.png"

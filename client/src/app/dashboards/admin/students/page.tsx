@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React,{useState,useEffect} from "react";
 import DashboardLayout from "@/components/DashboardLayout";
 import { adminDashboardMenuItem } from "@/utils/constant";
 import Table from "@mui/material/Table";
@@ -9,77 +9,73 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { deleteCourse, getCourses } from "@/api/course";
-import { CourseType } from "@/api/course";
+import { StudentType, deleteStudent } from "@/api/student";
 import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
+import { getAllStudents } from "@/api/student";
+import { deleteUser } from "@/api/user";
 
-const Courses = () => {
-  const [courses, setCourses] = useState<CourseType[]>([]);
+const Students = () => {
+  const [students, setStudents] = useState<StudentType[]>([]);
   const [isUpdated, setIsUpdated] = useState<boolean>(false);
-
-  const fetchCourses = async () => {
-    const data = await getCourses();
-    if (data) {
-      setCourses(data);
-    } else {
-      alert("An error occurred while fetching courses.");
-    }
+ 
+    const fetchStudents = async () => {
+      const data = await getAllStudents();
+      if (data) {
+        setStudents(data);
+      } else {
+        alert("An error occurred while fetching students.");
+      }
   };
-
+  
+  
   useEffect(() => {
-    fetchCourses();
+    fetchStudents();
   }, [isUpdated]);
 
-  const handleDelete = async (id: string): Promise<void> => {
-    try {
-      const response = await deleteCourse(id);
-      if (response?.success) {
-        setIsUpdated(true);
-        alert("Data has been deleted");
-      }
-    } catch (error) {
-      alert("Something is went wrong.");
-    }
-  };
+   const handleDelete = async (id: string,userId:string): Promise<void> => {
+     try {
+       const response = await deleteStudent(id);
+       const res = await deleteUser(userId);
+       if (response?.success&&res?.success) {
+         setIsUpdated(true);
+         alert("Data has been deleted");
+       }
+     } catch (error) {
+       alert("Something is went wrong.");
+     }
+   };
+
   return (
     <DashboardLayout menuItemList={adminDashboardMenuItem}>
       <TableContainer component={Paper}>
-        <h2
+        <h1
           style={{
             textAlign: "center",
             borderBottom: "1px solid silver",
             padding: "15px",
             fontWeight: "bold",
-            fontSize: "18px",
+            fontSize:"18px"
+          
           }}
         >
-          Courses
-        </h2>
+          Students
+        </h1>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
               <TableCell align="center" style={{ fontWeight: "bold" }}>
-                Name
+                First Name
               </TableCell>
               <TableCell align="center" style={{ fontWeight: "bold" }}>
-                Category
+                Last Name
               </TableCell>
               <TableCell align="center" style={{ fontWeight: "bold" }}>
-                course Level
+                Email
               </TableCell>
               <TableCell align="center" style={{ fontWeight: "bold" }}>
-                Language
-              </TableCell>
-              <TableCell align="center" style={{ fontWeight: "bold" }}>
-                IsCertified
-              </TableCell>
-              <TableCell align="center" style={{ fontWeight: "bold" }}>
-                Duration
-              </TableCell>
-              <TableCell align="center" style={{ fontWeight: "bold" }}>
-                Price
+                Phone No
               </TableCell>
               <TableCell align="center" style={{ fontWeight: "bold" }}>
                 Delete
@@ -87,20 +83,15 @@ const Courses = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {courses.map((course: CourseType) => (
+            {students.map((student: StudentType) => (
               <TableRow
-                key={course.name}
+                key={student.user.firstName}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
-                <TableCell align="center">{course.name}</TableCell>
-                <TableCell align="center">{course.category}</TableCell>
-                <TableCell align="center">{course.level}</TableCell>
-                <TableCell align="center">{course.language}</TableCell>
-                <TableCell align="center">
-                  {course.isCertified ? "Yes" : "No"}
-                </TableCell>
-                <TableCell align="center">{course.duration}</TableCell>
-                <TableCell align="center">{course.price}</TableCell>
+                <TableCell align="center">{student.user.firstName}</TableCell>
+                <TableCell align="center">{student.user.lastName}</TableCell>
+                <TableCell align="center">{student.user.email}</TableCell>
+                <TableCell align="center">{student.user.phoneNo}</TableCell>
                 <TableCell align="center">
                   {" "}
                   <button
@@ -109,7 +100,7 @@ const Courses = () => {
                       background: "transparent",
                       color: "red",
                     }}
-                    onClick={() => handleDelete(course?.id ?? "")}
+                    onClick={()=>handleDelete(student.user.id)}
                   >
                     <DeleteIcon />
                   </button>
@@ -123,4 +114,4 @@ const Courses = () => {
   );
 };
 
-export default Courses;
+export default Students;

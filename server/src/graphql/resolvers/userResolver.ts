@@ -23,7 +23,7 @@ export const updateUserResolver = async (
 ) => {
   return UserService.updateDataById(args.id, args);
 };
-export const deleteUser=async(_:any,  args:{ id: string } )=>{
+export const deleteUserResolver=async(_:any,  args:{ id: string } )=>{
   return UserService.deleteById(args.id)
 }
 

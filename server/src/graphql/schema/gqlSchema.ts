@@ -14,7 +14,7 @@ import {
   getUserByIdResolver,
   createUserResolver,
   updateUserResolver,
-  deleteUser,
+  deleteUserResolver,
 } from "../resolvers/userResolver";
 import { AuthResolver } from "../resolvers/authResolvers";
 import { UserRoleEnum } from "../types/EnumType";
@@ -22,9 +22,9 @@ import { UserType, AuthPayloadType, ResponseType } from "../types/UserType";
 import { CourseType } from "../types/CourseType";
 import { createCourseResolver, deleteCourseResolver, getAllCoursesResolver, getCourseByIdResolver, updateCourseResolver } from "../resolvers/courseResolver";
 import { TeacherFeedbackType, TeacherType } from "../types/TeacherType";
-import { getAllTeacherResolver, getTeacherByIdResolver } from "../resolvers/teacherResolver";
+import {  deleteTeacherResolver, getAllTeacherResolver, getTeacherByIdResolver } from "../resolvers/teacherResolver";
 import { StudentType } from "../types/StudentType";
-import { getAllStudentResolver, getStudentByIdResolver, updateStudentResolver } from "../resolvers/studentResolver";
+import {  deleteStudentResolver, getAllStudentResolver, getStudentByIdResolver, updateStudentResolver } from "../resolvers/studentResolver";
 import { createTeacherFeedbackResolver, deleteTeacherFeedbackResolver, getAllTeacherFeedbacksResolver, getTeacherFeedbackByIdResolver, updateTeacherFeedbackResolver } from "../resolvers/teacherFeedbackResolver";
 
 
@@ -177,8 +177,23 @@ const mutation = new GraphQLObjectType({
       args: {
         id: { type: GraphQLID },
       },
-      resolve: deleteUser,
+      resolve:deleteUserResolver,
     },
+    deleteStudent: {
+      type: ResponseType,
+      args: {
+        id:{type:GraphQLID}
+      },
+      resolve: deleteStudentResolver,
+    },
+    deleteTeacher: {
+      type: ResponseType,
+      args: {
+          id:{type:GraphQLID}
+      },
+      resolve:deleteTeacherResolver
+    }
+    ,
     deleteCourse: {
       type: ResponseType,
       args: {

@@ -18,7 +18,7 @@ export const updateStudentResolver = async (
 ) => {
   return StudentService.updateDataById(args.id, args);
 };
-export const deleteStudent=async(_:any,  args:{ id: string } )=>{
+export const deleteStudentResolver=async(_:any,  args:{ id: string } )=>{
   return StudentService.deleteById(args.id)
 }
 
