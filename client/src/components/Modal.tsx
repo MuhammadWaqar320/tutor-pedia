@@ -9,12 +9,16 @@ type ModalComponentPropsType = {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   children: React.ReactNode;
+  closeIconStyle?: Record<string, string>;
+  containerStyle?: Record<string, string>;
 };
 
 const ModalComponent: React.FC<ModalComponentPropsType> = ({
   open,
   setOpen,
   children,
+  closeIconStyle = {},
+  containerStyle={},
 }) => {
   const handleClose = () => setOpen(false);
 
@@ -25,9 +29,9 @@ const ModalComponent: React.FC<ModalComponentPropsType> = ({
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Box sx={style}>
+      <Box sx={style} style={containerStyle}>
         <ModalContentContainer>
-          <div className="close-icon">
+          <div className="close-icon" style={closeIconStyle}>
             <CloseIcon fontSize="large" onClick={handleClose} />
           </div>
           {children}

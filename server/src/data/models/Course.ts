@@ -20,7 +20,7 @@ const CourseSchema = new mongoose.Schema({
         required: true
     },
     level: {
-        type: Number,
+        type: String,
         required: true
     },
     duration: {
@@ -53,13 +53,12 @@ const CourseSchema = new mongoose.Schema({
         type: Number
     },
     startDate: {
-        type: Number
+        type: String
     },
     endDate: {
-        type: Number
+        type: String
     },
     teacher: { type: Schema.Types.ObjectId, ref: 'Teacher', required: true },
-    students: [{ type: Schema.Types.ObjectId, ref: 'Student' }],
 });
 
 const CourseModel = mongoose.model<CourseInterface & Document>("Course", CourseSchema);

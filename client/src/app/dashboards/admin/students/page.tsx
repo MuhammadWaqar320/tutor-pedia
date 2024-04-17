@@ -1,5 +1,5 @@
 "use client";
-import React,{useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import DashboardLayout from "@/components/DashboardLayout";
 import { adminDashboardMenuItem } from "@/utils/constant";
 import Table from "@mui/material/Table";
@@ -15,37 +15,37 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { getAllStudents } from "@/api/student";
 import { deleteUser } from "@/api/user";
+import { toastErrMessage, toastSuccessMessage } from "@/utils/functions";
 
 const Students = () => {
   const [students, setStudents] = useState<StudentType[]>([]);
   const [isUpdated, setIsUpdated] = useState<boolean>(false);
- 
-    const fetchStudents = async () => {
-      const data = await getAllStudents();
-      if (data) {
-        setStudents(data);
-      } else {
-        alert("An error occurred while fetching students.");
-      }
+
+  const fetchStudents = async () => {
+    const data = await getAllStudents();
+    if (data) {
+      setStudents(data);
+    } else {
+      toastErrMessage("An error occurred while fetching students.");
+    }
   };
-  
-  
+
   useEffect(() => {
     fetchStudents();
   }, [isUpdated]);
 
-   const handleDelete = async (id: string,userId:string): Promise<void> => {
-     try {
-       const response = await deleteStudent(id);
-       const res = await deleteUser(userId);
-       if (response?.success&&res?.success) {
-         setIsUpdated(true);
-         alert("Data has been deleted");
-       }
-     } catch (error) {
-       alert("Something is went wrong.");
-     }
-   };
+  const handleDelete = async (id: string, userId: string): Promise<void> => {
+    try {
+      const response = await deleteStudent(id);
+      const res = await deleteUser(userId);
+      if (response?.success && res?.success) {
+        setIsUpdated(true);
+        toastSuccessMessage("Data has been deleted");
+      }
+    } catch (error) {
+      toastErrMessage("Something is went wrong.");
+    }
+  };
 
   return (
     <DashboardLayout menuItemList={adminDashboardMenuItem}>
@@ -56,8 +56,7 @@ const Students = () => {
             borderBottom: "1px solid silver",
             padding: "15px",
             fontWeight: "bold",
-            fontSize:"18px"
-          
+            fontSize: "18px",
           }}
         >
           Students
@@ -100,7 +99,9 @@ const Students = () => {
                       background: "transparent",
                       color: "red",
                     }}
-                    onClick={()=>handleDelete(student.user.id)}
+                    onClick={() =>
+                      handleDelete(student.id, student?.user?.id ?? "")
+                    }
                   >
                     <DeleteIcon />
                   </button>

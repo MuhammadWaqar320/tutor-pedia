@@ -20,5 +20,16 @@ class StudentService extends genericService_1.default {
             return (0, utilFunctions_1.errorResponse)(`An error occurred while processing your request, Error: ${error}`, null, null);
         }
     }
+    async getStudentByUserId(userId, populatedFields = [], isPopulated = false) {
+        try {
+            if (isPopulated) {
+                return StudentRepo.getStudentByUserId(userId, populatedFields, isPopulated);
+            }
+            return StudentRepo.getStudentByUserId(userId);
+        }
+        catch (error) {
+            throw new Error(`An error occurred while processing your request, Error:${error}`);
+        }
+    }
 }
 exports.default = StudentService;

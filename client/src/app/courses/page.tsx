@@ -43,12 +43,13 @@ const Courses = () => {
                 cardDescription={item.description}
                 btnLabel="More Detail"
                 btnLink="/"
+                itemId={item.id}
               />
             </Grid>
           ))}
         </Grid>
       </div>
-    
+
       <Footer />
     </Container>
   );

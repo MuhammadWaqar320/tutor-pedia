@@ -18,9 +18,9 @@ class AuthService {
             if (!isPasswordValid) {
                 throw new Error("Invalid password");
             }
-            const { _id, firstName, lastName, role, email, profileUrl } = user;
+            const { _id, firstName, lastName, role, email, profileUrl, phoneNo } = user;
             // Generate and return a token
-            const token = jsonwebtoken_1.default.sign({ id: _id, firstName, lastName, email, role, profileUrl }, `${process.env.SECRET_KEY}`, {
+            const token = jsonwebtoken_1.default.sign({ id: _id, firstName, lastName, email, role, profileUrl, phoneNo }, `${process.env.SECRET_KEY}`, {
                 expiresIn: "1d",
             });
             return {

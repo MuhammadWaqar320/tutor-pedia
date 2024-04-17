@@ -15,6 +15,7 @@ export interface UserType {
   lastName: string;
   role: string;
   profileUrl: string;
+  phoneNo?: string;
 }
 type AdditionalInfoType = {
   iat: number;
@@ -60,11 +61,11 @@ const AppContextProvider: React.FC<AppContextProviderPropsType> = ({
       setToken(storedToken);
       // Decode the token to get user information
       const decodedUser: UserType & AdditionalInfoType = jwtDecode(storedToken);
-      const { id, firstName, lastName, role, email,exp,profileUrl } = decodedUser;
+      const { id, firstName, lastName, role, email,exp,profileUrl,phoneNo } = decodedUser;
       const currentTime:number = Date.now() / 1000; 
       if (!(exp < currentTime)) {
       
-        setUser({ id, firstName, lastName, role, email,profileUrl });
+        setUser({ id, firstName, lastName, role, email,profileUrl,phoneNo });
         setIsAuthenticated(true);
       } else {
         setIsAuthenticated(false);
@@ -79,9 +80,10 @@ const AppContextProvider: React.FC<AppContextProviderPropsType> = ({
     setToken(newToken);
     // Decode the token to get user information
     const decodedUser: UserType & AdditionalInfoType = jwtDecode(newToken);
-    const { id, firstName, lastName, role, email, profileUrl } = decodedUser;
+    const { id, firstName, lastName, role, email, profileUrl, phoneNo } =
+      decodedUser;
 
-    setUser({ id, firstName, lastName, role, email,profileUrl });
+    setUser({ id, firstName, lastName, role, email, profileUrl, phoneNo });
     setIsAuthenticated(true);
   }, []);
 

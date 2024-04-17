@@ -56,8 +56,8 @@ exports.UserType = new graphql_1.GraphQLObjectType({
     fields: () => {
         return {
             id: { type: graphql_1.GraphQLID },
-            firstName: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) },
-            lastName: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) },
+            firstName: { type: graphql_1.GraphQLString },
+            lastName: { type: graphql_1.GraphQLString },
             email: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) },
             password: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) },
             phoneNo: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) },

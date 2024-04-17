@@ -7,6 +7,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AppContextProvider } from "@/context/appContextProvider";
 import NextTopLoader from 'nextjs-toploader';
+import "@smastrom/react-rating/style.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,6 +17,7 @@ export const metadata: Metadata = {
 };
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
+  
   return (
     <html lang="en">
       <body className={inter.className} suppressHydrationWarning={true}>

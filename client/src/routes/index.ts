@@ -8,14 +8,25 @@ export const appRoute = {
   },
   DASHBOARDS: {
     STUDENT: {
-      DASHBOARD: "/dashboards/student",
+      TEACHERS: "/dashboards/student/teachers",
       COURSES: "/dashboards/student/courses",
+      CODE_EDITOR: "/editor",
+      ASSESSMENT: "/dashboards/student/assessment",
+      NOTES: "/dashboards/student/notes",
+      PROFILE: "/profile",
+      CHAT: "/chat",
     },
     TEACHER: {
-      DASHBOARD: "/dashboards/teacher",
+      COURSES: "/dashboards/teacher/courses",
+      STUDENTS: "/dashboards/teacher/students",
+      ADD_NOTES: "/dashboards/teacher/addNotes",
+      ADD_ASSESSMENT: "/dashboards/teacher/addAssessment",
+      PROFILE: "/profile",
+      CODE_EDITOR: "/editor",
+      CHAT: "/chat",
     },
     ADMIN: {
-      PROFILE: "/dashboards/admin/profile",
+      PROFILE: "/profile",
       COURSES: "/dashboards/admin/courses",
       NEWCOURSE: "/dashboards/admin/newcourse",
       TEACHERS: '/dashboards/admin/teachers',

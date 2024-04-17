@@ -14,6 +14,14 @@ export interface TeacherType extends UserType{
     students:StudentType[];
     user:UserType;
 }
+
+export interface TeacherFeedBack {
+  id?: string;
+  rating: number;
+  feedback: string;
+  student: string | StudentType;
+  teacher: string|TeacherType;
+}
   
 const gqlQuery = gql`
 query getAllTeacher {
@@ -43,6 +51,42 @@ mutation deleteTeacher($id:ID){
   }
 }
 `;
+const getFbQuery = gql`
+query getAllTeacherFB{
+  getAllTeacherFB {
+    rating,
+    feedback,
+    student{
+    firstName,
+    lastName
+    },
+    teacher{
+    id
+    }
+  }
+}
+
+`;
+
+const createFeedbackMutation = gql`
+ mutation createTeacherFeedback(
+  $rating: Float!
+  $student: ID!
+  $teacher: ID!
+  $feedback: String!
+) {
+  createTeacherFeedback(
+    rating: $rating
+    student: $student
+    teacher: $teacher
+    feedback: $feedback
+  ) {
+    success
+    code
+  }
+}
+
+`;
 
 export const deleteTeacher = async (id:string): Promise<{success:boolean}|undefined> => {
   try {
@@ -62,3 +106,28 @@ export const getAllTeachers = async():Promise<TeacherType[]|undefined> => {
         console.log(`An error occurred while fetching all course. Due to this error:${error}`);
     }
 }
+
+export const getAllTeachersFeedback = async():Promise<any> => {
+    try {
+      const response: any = await graphQLClient.request(getFbQuery);
+
+        return response.getAllTeacherFB;
+    } catch (error) {
+        console.log(`An error occurred while fetching all course. Due to this error:${error}`);
+    }
+}
+
+export const AddTeacherFeedBack = async (
+  variables: TeacherFeedBack
+): Promise<{ success: boolean; message:string}> => {
+  try {
+    const response:any=
+      await graphQLClient.request(createFeedbackMutation, {
+        ...variables,
+      });
+
+    return response?.createTeacherFeedback ?? { success: false, code: "" };
+  } catch (error) {
+    throw error;
+  }
+};

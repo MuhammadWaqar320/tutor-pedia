@@ -25,6 +25,7 @@ interface MediaCardPropsType {
   btnLink?: string;
   isTeacher?: boolean;
   teacherData?: any;
+  itemId?: string;
 }
 
 const MediaCard: React.FC<MediaCardPropsType> = ({
@@ -38,6 +39,7 @@ const MediaCard: React.FC<MediaCardPropsType> = ({
   btnLink = "",
   isTeacher = false,
   teacherData,
+  itemId,
 }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
@@ -110,7 +112,7 @@ const MediaCard: React.FC<MediaCardPropsType> = ({
           <Typography
             variant="body2"
             color="text.secondary"
-            style={{ textAlign: "justify" }}
+            style={{ textAlign: "justify", height: "80px" }}
           >
             {cardDescription.length > 170
               ? `${cardDescription.substring(0, 170)}...`
@@ -119,9 +121,17 @@ const MediaCard: React.FC<MediaCardPropsType> = ({
         )}
       </CardContent>
       <CardActions>
-        <Button size="small" aria-describedby={id} onClick={handleClick}>
-          {btnLabel}
-        </Button>
+        {isTeacher ? (
+          <Button size="small" aria-describedby={id} onClick={handleClick}>
+            {btnLabel}
+          </Button>
+        ) : (
+          <Link href={`/courses/${itemId}`}>
+            <Button size="small" aria-describedby={id}>
+              {btnLabel}
+            </Button>
+          </Link>
+        )}
       </CardActions>
       {isTeacher ? (
         <Popper

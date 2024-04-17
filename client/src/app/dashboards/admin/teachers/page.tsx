@@ -15,6 +15,7 @@ import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { deleteTeacher } from "@/api/teacher";
 import { deleteUser } from "@/api/user";
+import { toastErrMessage, toastSuccessMessage } from "@/utils/functions";
 const Teachers = () => {
   const [teachers, setTeachers] = useState<TeacherType[]>([]);
   const [isUpdated, setIsUpdated] = useState<boolean>(false);
@@ -24,7 +25,7 @@ const Teachers = () => {
     if (data) {
       setTeachers(data);
     } else {
-      alert("An error occurred while fetching teachers.");
+         toastErrMessage("An error occurred while fetching teachers.");
     }
   };
 
@@ -38,10 +39,10 @@ const Teachers = () => {
       const res = await deleteUser(userId);
       if (response?.success && res?.success) {
         setIsUpdated(true);
-        alert("Data has been deleted");
+        toastSuccessMessage("Data has been deleted");
       }
     } catch (error) {
-      alert("Something is went wrong.");
+        toastErrMessage("Something is went wrong.");
     }
   };
   return (
@@ -104,7 +105,7 @@ const Teachers = () => {
                       background: "transparent",
                       color: "red",
                     }}
-                    onClick={() => handleDelete(teacher.id, teacher.user.id)}
+                    onClick={() => handleDelete(teacher.id, teacher?.user?.id??"")}
                   >
                     <DeleteIcon />
                   </button>

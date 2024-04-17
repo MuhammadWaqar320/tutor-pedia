@@ -14,6 +14,7 @@ import { CourseType } from "@/api/course";
 import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
+import { toastErrMessage, toastSuccessMessage } from "@/utils/functions";
 
 const Courses = () => {
   const [courses, setCourses] = useState<CourseType[]>([]);
@@ -24,7 +25,7 @@ const Courses = () => {
     if (data) {
       setCourses(data);
     } else {
-      alert("An error occurred while fetching courses.");
+      toastErrMessage("An error occurred while fetching courses.");
     }
   };
 
@@ -37,10 +38,10 @@ const Courses = () => {
       const response = await deleteCourse(id);
       if (response?.success) {
         setIsUpdated(true);
-        alert("Data has been deleted");
+        toastSuccessMessage("Data has been deleted");
       }
     } catch (error) {
-      alert("Something is went wrong.");
+      toastErrMessage("Something is went wrong.");
     }
   };
   return (
@@ -100,7 +101,7 @@ const Courses = () => {
                   {course.isCertified ? "Yes" : "No"}
                 </TableCell>
                 <TableCell align="center">{course.duration}</TableCell>
-                <TableCell align="center">{course.price}</TableCell>
+                <TableCell align="center">${course.price}</TableCell>
                 <TableCell align="center">
                   {" "}
                   <button

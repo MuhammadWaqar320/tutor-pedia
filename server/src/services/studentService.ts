@@ -22,6 +22,19 @@ class StudentService extends GenericService<StudentInterface & Document> {
       );
     }
   }
+  async getStudentByUserId( userId: string,
+    populatedFields:string[]=[],isPopulated:boolean=false) {
+       try {
+      if (isPopulated) {
+        return StudentRepo.getStudentByUserId(userId,populatedFields,isPopulated);
+      }
+      return StudentRepo.getStudentByUserId(userId);
+    } catch (error) {
+      throw new Error(
+        `An error occurred while processing your request, Error:${error}`
+      );
+    }
+  }
 
 }
 

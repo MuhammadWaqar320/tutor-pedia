@@ -26,7 +26,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importStar(require("mongoose"));
 // Define the schema for the teacher feedback
 const TeacherFeedbackSchema = new mongoose_1.Schema({
-    student: { type: mongoose_1.Schema.Types.ObjectId, ref: 'Student', required: true },
+    student: { type: mongoose_1.Schema.Types.ObjectId, ref: 'User', required: true },
     teacher: { type: mongoose_1.Schema.Types.ObjectId, ref: 'Teacher', required: true },
     feedback: { type: String, required: true }, // The actual feedback provided by the student
     rating: { type: Number, required: true }, // A numerical rating provided by the student to evaluate the teacher

@@ -22,3 +22,7 @@ export const deleteStudentResolver=async(_:any,  args:{ id: string } )=>{
   return StudentService.deleteById(args.id)
 }
 
+export const getStudentByUserIdResolver= (_: any, args: { user: string }) => {
+  return StudentService.getStudentByUserId(args.user,["teachers","courses","user"],true);
+};
+

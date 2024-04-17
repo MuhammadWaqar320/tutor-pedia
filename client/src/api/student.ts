@@ -13,19 +13,42 @@ export interface StudentType extends UserType{
 }
 
 const gqlQuery = gql`
-query getAllStudent {
-getAllStudent {
-  id, 
-  user{
-      firstName,
-      profileUrl,
-      phoneNo,
-      email,
-      lastName,
+  query getAllStudent {
+    getAllStudent {
       id
-    }   
-  }  
-
+      courses {
+        id
+        name
+        category
+        level
+        language
+        isCertified
+        endDate
+      }
+      user {
+        firstName
+        profileUrl
+        phoneNo
+        email
+        lastName
+        id
+      }   
+    }
+  }
+`;
+const gqlQueryForStu = gql`
+query GetStudentByUserId($user: ID) {
+  getStudentByUserId(user: $user) {
+    courses {
+      id
+      name
+      category
+      level
+      language
+      isCertified
+      endDate
+    }
+  }
 }
 `;
 
@@ -50,6 +73,15 @@ export const getAllStudents = async():Promise<StudentType[]|undefined> => {
       const response: any = await graphQLClient.request(gqlQuery);
 
         return response.getAllStudent;
+    } catch (error) {
+        console.log(`An error occurred while fetching all students. Due to this error:${error}`);
+    }
+}
+
+export const getStudentByUserId = async(userId:string):Promise<any> => {
+    try {
+      const response: any = await graphQLClient.request(gqlQueryForStu,{user:userId});
+        return response.getStudentByUserId;
     } catch (error) {
         console.log(`An error occurred while fetching all students. Due to this error:${error}`);
     }

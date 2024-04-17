@@ -17,6 +17,14 @@ class StudentRepo extends GenericRepo<StudentInterface & Document> {
     });
     return newStudent.save();
   }
+  getStudentByUserId(id: string, populatedFields: string[] = [], isPopulated: boolean = false) {
+  if (isPopulated) {
+    return this.model.findOne({ user: id }).populate(populatedFields).exec();
+  }
+  return this.model.findById(id).exec();
+}
+
+
 
 }
 

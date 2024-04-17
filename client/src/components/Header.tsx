@@ -142,9 +142,9 @@ const Header = () => {
     if (user?.role === userRole.admin) {
       router.push(appRoute.DASHBOARDS.ADMIN.COURSES);
     } else if (user?.role === userRole.student) {
-      router.push(appRoute.DASHBOARDS.STUDENT.DASHBOARD);
+      router.push(appRoute.DASHBOARDS.STUDENT.COURSES);
     } else if (user?.role === userRole.teacher) {
-      router.push(appRoute.DASHBOARDS.TEACHER.DASHBOARD);
+      router.push(appRoute.DASHBOARDS.TEACHER.COURSES);
     } else {
       toastErrMessage("Not authorized.");
     }
