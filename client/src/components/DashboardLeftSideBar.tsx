@@ -19,7 +19,6 @@ type PropsType = {
 
 const DashboardLeftSideBar: React.FC<PropsType> = ({ menuItems }) => {
   const pathname = usePathname()
-  console.log("pathname:",pathname)
 
   return (
     <Container>

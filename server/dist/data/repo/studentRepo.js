@@ -18,5 +18,11 @@ class StudentRepo extends genericRepo_1.default {
         });
         return newStudent.save();
     }
+    getStudentByUserId(id, populatedFields = [], isPopulated = false) {
+        if (isPopulated) {
+            return this.model.findOne({ user: id }).populate(populatedFields).exec();
+        }
+        return this.model.findById(id).exec();
+    }
 }
 exports.default = StudentRepo;

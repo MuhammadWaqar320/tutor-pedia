@@ -23,7 +23,7 @@ const CourseSchema = new mongoose_1.default.Schema({
         required: true
     },
     level: {
-        type: Number,
+        type: String,
         required: true
     },
     duration: {
@@ -56,13 +56,12 @@ const CourseSchema = new mongoose_1.default.Schema({
         type: Number
     },
     startDate: {
-        type: Number
+        type: String
     },
     endDate: {
-        type: Number
+        type: String
     },
     teacher: { type: mongoose_2.Schema.Types.ObjectId, ref: 'Teacher', required: true },
-    students: [{ type: mongoose_2.Schema.Types.ObjectId, ref: 'Student' }],
 });
 const CourseModel = mongoose_1.default.model("Course", CourseSchema);
 exports.default = CourseModel;

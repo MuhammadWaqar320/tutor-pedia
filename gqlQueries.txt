@@ -131,3 +131,21 @@ mutation {
     }
   }
 }
+
+mutation {
+  createUser(
+    firstName: "Asif"
+    lastName: "ahmad"
+    email: "asif@gmail.com"
+    password: "123456"
+    phoneNo: "03541243235"
+    role: Teacher
+    profileUrl: "https://images.squarespace-cdn.com/content/v1/631ba8eed2196a6795698665/92ebb1ea-2864-41f6-aa09-27bbd1b603bd/2022-07-28-Kyle-Nelson-0061.jpg"
+    bio:" My name is Mehtab, and I am proud to be a Parkway Early Childhood Panda!! · I have a true passion for working with our youngest learners!!"
+    specialization:"Data science"
+    qualification:"Phd"
+    
+  ) {
+    success
+  }
+}

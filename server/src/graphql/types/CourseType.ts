@@ -19,7 +19,7 @@ export const CourseType :GraphQLObjectType= new GraphQLObjectType({
     category: { type: new GraphQLNonNull(GraphQLString) },
     description: { type: new GraphQLNonNull(GraphQLString) },
     price: { type: new GraphQLNonNull(GraphQLString) },
-    level: { type: new GraphQLNonNull(GraphQLFloat) },
+    level: { type: new GraphQLNonNull(GraphQLString) },
     duration: { type: new GraphQLNonNull(GraphQLString) },
     preRequisites: { type: new GraphQLNonNull(GraphQLString) },
     updatedAt: { type: new GraphQLNonNull(GraphQLFloat) },
@@ -28,9 +28,8 @@ export const CourseType :GraphQLObjectType= new GraphQLObjectType({
     language: { type: new GraphQLNonNull(GraphQLString) },
     isCertified: { type: new GraphQLNonNull(GraphQLBoolean) },
     rating: { type: new GraphQLNonNull(GraphQLFloat) },
-    startDate: { type: new GraphQLNonNull(GraphQLFloat) },
-    endDate: { type: new GraphQLNonNull(GraphQLFloat) },
-    teacher: { type:  TeacherType }, // Assuming teacher id is of type GraphQLID
-    students: { type: new GraphQLList(StudentType) }, // Assuming students ids are of type GraphQLID
+    startDate: { type: new GraphQLNonNull(GraphQLString) },
+    endDate: { type: new GraphQLNonNull(GraphQLString) },
+    teacher: { type:  TeacherType },
   }),
 });

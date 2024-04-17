@@ -12,8 +12,6 @@ const Home = () => {
         <main>
           <Header />
           <SliderSection />
-          <div>{/* Additional content */}</div>
-          <div>{/* Additional content */}</div>
           <LandingInfoSection />
           <Footer />
         </main>

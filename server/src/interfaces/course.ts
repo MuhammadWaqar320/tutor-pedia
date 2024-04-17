@@ -1,12 +1,12 @@
 import { Schema } from "mongoose";
 
 export interface CourseInterface {
-  id: string;
+    id?: string;
     name: string;
     category: string;
     description: string;
     price: string;
-    level: number;
+    level: string;
     duration:string;
     preRequisites:string;
     upatedAt: number;
@@ -15,8 +15,8 @@ export interface CourseInterface {
     language: string;
     isCertified: boolean;
     rating: number;
-    startDate: number;
-    endDate: number;
+    startDate: string;
+    endDate: string;
     teacher:Schema.Types.ObjectId;
-    students: Schema.Types.ObjectId[];
+    students?: Schema.Types.ObjectId[];
   }

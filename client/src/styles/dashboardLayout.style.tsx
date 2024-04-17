@@ -15,7 +15,7 @@ const Container = styled.div`
 `;
 const Content = styled.div`
   overflow-y: auto;
-  max-height: calc(100vh - 125px);
+  max-height: calc(100vh - 95px);
   padding: 25px;
   text-align: justify;
 `;

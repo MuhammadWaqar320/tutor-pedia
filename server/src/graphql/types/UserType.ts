@@ -62,8 +62,8 @@ export const UserType:GraphQLObjectType = new GraphQLObjectType({
   fields: () => {
     return {
       id: { type: GraphQLID },
-      firstName: { type: new GraphQLNonNull(GraphQLString) },
-      lastName: { type: new GraphQLNonNull(GraphQLString) },
+      firstName: { type: GraphQLString },
+      lastName: { type: GraphQLString },
       email: { type: new GraphQLNonNull(GraphQLString) },
       password: { type: new GraphQLNonNull(GraphQLString) },
       phoneNo: { type: new GraphQLNonNull(GraphQLString) },

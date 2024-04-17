@@ -22,7 +22,7 @@ exports.TeacherFeedbackType = new graphql_1.GraphQLObjectType({
     name: 'TeacherFeedback',
     fields: () => ({
         id: { type: graphql_1.GraphQLID },
-        student: { type: StudentType_1.StudentType },
+        student: { type: UserType_1.UserType },
         teacher: { type: exports.TeacherType },
         feedback: { type: graphql_1.GraphQLString },
         rating: { type: graphql_1.GraphQLFloat },

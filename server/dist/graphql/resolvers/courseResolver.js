@@ -7,11 +7,11 @@ exports.deleteCourseResolver = exports.updateCourseResolver = exports.createCour
 const courseService_1 = __importDefault(require("../../services/courseService"));
 const courseService = new courseService_1.default();
 const getAllCoursesResolver = async () => {
-    return courseService.getAllData(["teacher", "students"], true);
+    return courseService.getAllData(["teacher"], true);
 };
 exports.getAllCoursesResolver = getAllCoursesResolver;
 const getCourseByIdResolver = async (_, args) => {
-    return courseService.getDataById(args.id, ["teacher", "students"], true);
+    return courseService.getDataById(args.id, ["teacher"], true);
 };
 exports.getCourseByIdResolver = getCourseByIdResolver;
 const createCourseResolver = async (_, args) => {

@@ -30,10 +30,10 @@ export const TeacherFeedbackType: GraphQLObjectType = new GraphQLObjectType({
   name: 'TeacherFeedback',
   fields: () => ({
     id: { type: GraphQLID },
-    student: { type: StudentType },
+    student: { type: UserType },
     teacher: { type: TeacherType },
     feedback: { type: GraphQLString },
     rating: { type: GraphQLFloat },
-       feedbackDate:{type:GraphQLFloat}
+    feedbackDate:{type:GraphQLFloat}
   }),
 })

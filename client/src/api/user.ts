@@ -7,46 +7,25 @@ export enum UserRole {
   Student = "Student",
 }
 export interface UserType {
+  id?: string;
   firstName: string;
   lastName: string;
   email: string;
   phoneNo: string;
-  role: UserRole;
-  password: string;
-  profileUrl: string;
+  role?: UserRole;
+  password?: string;
+  profileUrl?: string;
   bio?: string;
   qualification?: string;
   specialization?: string;
 }
 
-export interface AddCourseType {
-  name: string;
-  category: string;
-  description: string;
-  price: string;
-  level: number;
-  duration: number;
-  preRequisites: string;
-  coverPhotoUrl: string;
-  language: string;
-  isCertified: boolean;
-  rating: number;
-  updatedAt?: number;
-  createdAt?: number;
-  startDate?: number;
-  endDate?: number;
-  students?: string;
-  teacher?: string;
-}
+
 interface CreateUserResponse {
   success: boolean;
   code: string;
 }
 
-interface addNewCourseResponse {
-  success: boolean;
-  code: string;
-}
 
 const createUserMutation = gql`
   mutation CreateNewUser(
@@ -79,44 +58,20 @@ const createUserMutation = gql`
   }
 `;
 
-const CREATE_COURSE_MUTATION = gql`
-  mutation CreateCourse(
-    $name: String!
-    $category: String!
-    $description: String!
-    $price: String!
-    $level: Int!
-    $duration: String!
-    $preRequisites: String!
-    $updatedAt: Int!
-    $createdAt: Int!
-    $coverPhotoUrl: String!
-    $language: String!
-    $isCertified: Boolean!
-    $rating: Int!
-    $startDate: Int!
-    $endDate: Int!
-    $teacher: ID
-    $students: [ID]!
+const updateUserMutation = gql`
+  mutation updateUser(
+    $id:ID!
+    $firstName: String!
+    $lastName: String!
+    $email: String!
+    $phoneNo: String!
   ) {
-    createCourse(
-      name: $name
-      category: $category
-      description: $description
-      price: $price
-      level: $level
-      duration: $duration
-      preRequisites: $preRequisites
-      updatedAt: $updatedAt
-      createdAt: $createdAt
-      coverPhotoUrl: $coverPhotoUrl
-      language: $language
-      isCertified: $isCertified
-      rating: $rating
-      startDate: $startDate
-      endDate: $endDate
-      teacher: $teacher
-      students: $students
+    updateUser(
+      id:$id
+      firstName: $firstName
+      lastName: $lastName
+      email: $email
+      phoneNo: $phoneNo
     ) {
       success
       code
@@ -139,18 +94,35 @@ export const createNewUser = async (
   }
 };
 
-export const AddNewCourse = async (
-  variables: AddCourseType
-): Promise<addNewCourseResponse> => {
+export const updateUser = async (
+  variables: UserType
+): Promise<CreateUserResponse> => {
   try {
-    const response: { createCourse?: addNewCourseResponse } =
-      await graphQLClient.request(CREATE_COURSE_MUTATION, {
+    const response:any =
+      await graphQLClient.request(updateUserMutation, {
         ...variables,
       });
 
-    return response?.createCourse ?? { success: false, code: "" };
+    return response?.updateUser ?? { success: false, code: "" };
   } catch (error) {
-    console.log(error, "checkingsss");
     throw error;
   }
 };
+
+const deleteQuery = gql`
+mutation deleteUser($id:ID){
+  deleteUser(id:$id){
+    success
+  }
+}
+`;
+
+export const deleteUser = async (id:string): Promise<{success:boolean}|undefined> => {
+  try {
+    const response: any = await graphQLClient.request(deleteQuery,{id});
+    return response.deleteUser;
+  } catch (error) {
+     console.log(`An error occurred while deleting data. Due to this error:${error}`);
+  }
+}
+

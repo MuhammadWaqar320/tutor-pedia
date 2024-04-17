@@ -27,7 +27,6 @@ class CourseRepo extends genericRepo_1.default {
             startDate: courseData.startDate,
             endDate: courseData.endDate,
             teacher: courseData.teacher,
-            students: courseData.students,
         });
         return newCourse.save();
     }

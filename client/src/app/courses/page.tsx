@@ -10,6 +10,8 @@ import { Container } from "@/styles/course.style";
 import { useEffect, useState } from "react";
 import { getCourses } from "@/api/course";
 import { CourseType } from "@/api/course";
+import { TeacherType } from "@/api/teacher";
+import { getAllTeachers } from "@/api/teacher";
 
 const Courses = () => {
   const [courses, setCourses] = useState<CourseType[]>([]);
@@ -26,12 +28,12 @@ const Courses = () => {
   useEffect(() => {
     fetchCourses();
   }, []);
-  console.log(courses);
+
   return (
     <Container>
       <Header />
       <div className="course-section">
-        <h2 className="course-heading">All New Courses</h2>
+        <h2 className="course-heading">What Course will you be taking</h2>
         <Grid container spacing={2}>
           {courses.map((item: CourseType) => (
             <Grid item xs={6} md={4} lg={3} key={item.id}>
@@ -41,11 +43,13 @@ const Courses = () => {
                 cardDescription={item.description}
                 btnLabel="More Detail"
                 btnLink="/"
+                itemId={item.id}
               />
             </Grid>
           ))}
         </Grid>
       </div>
+
       <Footer />
     </Container>
   );
