@@ -18,6 +18,8 @@ export interface UserType {
   bio?: string;
   qualification?: string;
   specialization?: string;
+  createdAt?: number;
+  updatedAt?: number;
 }
 
 
@@ -26,6 +28,18 @@ interface CreateUserResponse {
   code: string;
 }
 
+const gqlQuery = gql`
+  query getAllUser {
+    getAllUser {
+      id
+      firstName
+      lastName
+      profileUrl  
+      createdAt
+      email
+    }
+  }
+`;
 
 const createUserMutation = gql`
   mutation CreateNewUser(
@@ -126,3 +140,11 @@ export const deleteUser = async (id:string): Promise<{success:boolean}|undefined
   }
 }
 
+export const getAllUser = async ():Promise<any> => {
+  try {
+    const response: any = await graphQLClient.request(gqlQuery);
+    return response.getAllUser;
+  } catch (error) {
+     console.log(`An error occurred while deleting data. Due to this error:${error}`);
+  }
+}

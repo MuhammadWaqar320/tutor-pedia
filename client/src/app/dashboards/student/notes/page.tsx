@@ -52,7 +52,7 @@ const Notes = () => {
                 Name
               </TableCell>
               <TableCell align="center" style={{ fontWeight: "bold" }}>
-                 Notes Type
+                Notes Type
               </TableCell>
               <TableCell align="center" style={{ fontWeight: "bold" }}>
                 Course Name
@@ -66,30 +66,32 @@ const Notes = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {notes.map((n: NotesType) => (
-              <TableRow
-                key={n.id}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
+            {notes
+              .filter((n) => n.type !== "Recorded-lecture")
+              .map((n: NotesType) => (
+                <TableRow
+                  key={n.id}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                >
                   <TableCell align="center">{n.name}</TableCell>
-                <TableCell align="center">{n.type}</TableCell>
-                <TableCell align="center">
-                  {typeof n.course === "string" ? "" : n.course?.name ?? ""}
-                </TableCell>
-                <TableCell align="center">
-                  {new Date(n.uploadedDate ?? "").toLocaleString()}
-                </TableCell>
+                  <TableCell align="center">{n.type}</TableCell>
+                  <TableCell align="center">
+                    {typeof n.course === "string" ? "" : n.course?.name ?? ""}
+                  </TableCell>
+                  <TableCell align="center">
+                    {new Date(n.uploadedDate ?? "").toLocaleString()}
+                  </TableCell>
 
-                <TableCell align="center">
-                  {" "}
-                  <button style={{ color: "blue" }}>
-                    <a href={n.fileUrl} download>
-                      Download
-                    </a>
-                  </button>
-                </TableCell>
-              </TableRow>
-            ))}
+                  <TableCell align="center">
+                    {" "}
+                    <button style={{ color: "blue" }}>
+                      <a href={n.fileUrl} download>
+                        Download
+                      </a>
+                    </button>
+                  </TableCell>
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
       </TableContainer>

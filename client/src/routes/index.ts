@@ -4,7 +4,8 @@ export const appRoute = {
     COURSES: "/courses",
     SIGN_UP: "/signUp",
     HOME: "/",
-    GIGS:"/teachers"
+    GIGS: "/teachers",
+    TEST: "/test",
   },
   DASHBOARDS: {
     STUDENT: {
@@ -15,6 +16,8 @@ export const appRoute = {
       NOTES: "/dashboards/student/notes",
       PROFILE: "/profile",
       CHAT: "/chat",
+      LECTURES: "/dashboards/student/lectures",
+      WORKSHOP: "/dashboards/student/workshops",
     },
     TEACHER: {
       COURSES: "/dashboards/teacher/courses",
@@ -24,15 +27,17 @@ export const appRoute = {
       PROFILE: "/profile",
       CODE_EDITOR: "/editor",
       CHAT: "/chat",
+      ADD_WORKSHOP: "/dashboards/teacher/addWorkshop",
+      REQUEST: "/dashboards/teacher/requests",
     },
     ADMIN: {
       PROFILE: "/profile",
       COURSES: "/dashboards/admin/courses",
       NEWCOURSE: "/dashboards/admin/newcourse",
-      TEACHERS: '/dashboards/admin/teachers',
-      STUDENTS: '/dashboards/admin/students',
+      TEACHERS: "/dashboards/admin/teachers",
+      STUDENTS: "/dashboards/admin/students",
       PAYMENT: "/dashboards/admin/payment",
-      RATING:"/dashboards/admin/rating",
+      RATING: "/dashboards/admin/rating",
     },
   },
 };

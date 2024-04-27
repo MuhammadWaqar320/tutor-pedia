@@ -11,7 +11,6 @@ import { useEffect, useState } from "react";
 import { TeacherType } from "@/api/teacher";
 import { getAllTeachers } from "@/api/teacher";
 
-
 const Teachers = () => {
   const [teachers, setTeachers] = useState<TeacherType[]>([]);
 
@@ -19,8 +18,7 @@ const Teachers = () => {
     const teacherData = await getAllTeachers();
     if (teacherData) {
       setTeachers(teacherData);
-    }
-    else {
+    } else {
       alert("An error occurred while fetching gigs.");
     }
   };
@@ -47,6 +45,7 @@ const Teachers = () => {
                 cardImageHeight={300}
                 isTeacher={true}
                 teacherData={item}
+                itemId={item.id}
               />
             </Grid>
           ))}
