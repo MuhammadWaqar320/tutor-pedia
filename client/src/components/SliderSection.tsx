@@ -34,7 +34,10 @@ const SliderSection = () => {
               field.
             </p>
 
-            <Link href="#" className="btn register-btn">
+            <Link
+              href={appRoute.PUBLIC_ROUTES.COURSES}
+              className="btn register-btn"
+            >
               Apply Now
             </Link>
             <Link

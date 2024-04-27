@@ -31,7 +31,7 @@ getAllTeacher {
       bio,
       qualification,
       specialization,
-    id, user{
+      user{
       firstName,
       profileUrl,
       phoneNo,
@@ -42,6 +42,27 @@ getAllTeacher {
   }  
 
 }
+`;
+const getTeacherByIdQuery = gql`
+  query getTeacherById($id: ID!) {
+    getTeacherById(id: $id) {
+      id
+      updatedAt
+      bio
+      qualification
+      specialization
+      user {
+        firstName
+        profileUrl
+        phoneNo
+        email
+        lastName
+        createdAt
+        updatedAt
+        id
+      }
+    }
+  }
 `;
 
 const deleteQuery = gql`
@@ -96,6 +117,20 @@ export const deleteTeacher = async (id:string): Promise<{success:boolean}|undefi
      console.log(`An error occurred while deleting data. Due to this error:${error}`);
   }
 }
+export const getTeacherById = async (
+  id: string
+): Promise<{ success: boolean } | undefined> => {
+  try {
+    const response: any = await graphQLClient.request(getTeacherByIdQuery, {
+      id,
+    });
+    return response.getTeacherById;
+  } catch (error) {
+    console.log(
+      `An error occurred while deleting data. Due to this error:${error}`
+    );
+  }
+};
 
 export const getAllTeachers = async():Promise<TeacherType[]|undefined> => {
     try {

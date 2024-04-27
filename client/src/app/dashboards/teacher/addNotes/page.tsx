@@ -26,13 +26,14 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { uploadFileToFBStorageAndGetURL } from "@/api/common";
 import { AddNewCourse } from "@/api/course";
 import { teacherDashboardMenuItem } from "@/utils/constant";
-import { NotesType,AddNewNotes } from "@/api/notes";
+import { NotesType, AddNewNotes } from "@/api/notes";
 
 const types = [
   { id: 1, value: "Image", label: "Image" },
   { id: 2, value: "HandWritten", label: "HandWritten" },
   { id: 3, value: "file", label: "PDF File" },
   { id: 4, value: "E-Book", label: "E-Book" },
+  { id: 5, value: "Recorded-lecture", label: "Recorded-lecture" },
 ];
 
 const Addnotess = () => {
@@ -81,7 +82,7 @@ const Addnotess = () => {
         };
         const res = await AddNewNotes(note);
         if (res?.success) {
-          toastSuccessMessage("Notes Uploaded.");
+          toastSuccessMessage("Notes/Lecture Uploaded.");
         } else {
           toastErrMessage("Somethingis went wrong.");
         }
@@ -131,14 +132,14 @@ const Addnotess = () => {
               style={{ margin: "auto" }}
             />
             <p className="sign-up-label" style={{ fontWeight: "bold" }}>
-              Upload New Notes
+              Upload New Notes/Lectures
             </p>
           </div>
           <Form.Group controlId="formGridFirstName" className="mb-1.5">
             <Form.Label className="mb-0.5">Name</Form.Label>
             <Form.Control
               type="text"
-              placeholder="Enter the name of notes"
+              placeholder="Enter the name of notes/lecture"
               name="name"
               value={notesData.name}
               onChange={handleOnChange}
@@ -150,7 +151,7 @@ const Addnotess = () => {
             controlId="formGridFatherName"
             className="mb-1.5"
           >
-            <Form.Label className="mb-0.5">Notes Type</Form.Label>
+            <Form.Label className="mb-0.5">Notes/Lecture Type</Form.Label>
             <Form.Select
               aria-label="Default select example"
               value={notesData.type}
@@ -185,11 +186,11 @@ const Addnotess = () => {
           </Form.Group>
 
           <Form.Group as={Col} controlId="formGridName" className="mb-1.5">
-            <Form.Label className="mb-0.5">Upload Pdf:</Form.Label>
+            <Form.Label className="mb-0.5">Upload Pdf/Video:</Form.Label>
             <Form.Control
               type="file"
               onChange={onChangeFile}
-              accept=".pdf"
+              accept=".pdf,video/*"
               required
             />
           </Form.Group>
@@ -216,7 +217,7 @@ const Addnotess = () => {
                 borderRadius: "20px",
               }}
             >
-              Upload Notes
+              Upload Notes/Lecture
             </Button>
           </div>
         </Form>

@@ -122,9 +122,11 @@ const MediaCard: React.FC<MediaCardPropsType> = ({
       </CardContent>
       <CardActions>
         {isTeacher ? (
-          <Button size="small" aria-describedby={id} onClick={handleClick}>
-            {btnLabel}
-          </Button>
+          <Link href={`/teachers/${itemId}`}>
+            <Button size="small" aria-describedby={id}>
+              {btnLabel}
+            </Button>
+          </Link>
         ) : (
           <Link href={`/courses/${itemId}`}>
             <Button size="small" aria-describedby={id}>
@@ -133,63 +135,6 @@ const MediaCard: React.FC<MediaCardPropsType> = ({
           </Link>
         )}
       </CardActions>
-      {isTeacher ? (
-        <Popper
-          id={id}
-          open={open}
-          anchorEl={anchorEl}
-          placement="bottom-start"
-        >
-          <Box
-            sx={{
-              border: 1,
-              p: 1,
-              bgcolor: "background.paper",
-              borderRadius: "5px",
-              borderColor: "silver",
-              maxWidth: "326px",
-            }}
-          >
-            <>
-              <Typography>
-                <span style={{ fontWeight: "bold" }}>First Name: </span>{" "}
-                {teacherData?.user.firstName}
-              </Typography>
-              <Typography>
-                <span style={{ fontWeight: "bold" }}>Last Name: </span>{" "}
-                {teacherData?.user?.lastName}
-              </Typography>
-              <Typography>
-                <span style={{ fontWeight: "bold" }}>Qualification: </span>{" "}
-                {teacherData?.qualification}
-              </Typography>
-              <Typography>
-                <span style={{ fontWeight: "bold" }}>Specialization: </span>{" "}
-                {teacherData?.specialization}
-              </Typography>
-              <Typography>
-                <span style={{ fontWeight: "bold" }}>Rating: </span> 2.3
-                <StarIcon
-                  fontSize="small"
-                  style={{ marginBottom: "2px", color: "orange" }}
-                />
-              </Typography>
-              <Typography>
-                <span style={{ fontWeight: "bold" }}>Email: </span>
-                {teacherData.user.email}
-              </Typography>
-              <Typography>
-                <span style={{ fontWeight: "bold" }}>Phone Number: </span>{" "}
-                {teacherData.user.phoneNo}
-              </Typography>
-              <Typography variant="body2" style={{ textAlign: "justify" }}>
-                <span style={{ fontWeight: "bold" }}>Bio information: </span>
-                {cardDescription}
-              </Typography>
-            </>
-          </Box>
-        </Popper>
-      ) : null}
     </Card>
   );
 };

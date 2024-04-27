@@ -6,8 +6,10 @@ import StyledComponentsRegistry from "./registry";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AppContextProvider } from "@/context/appContextProvider";
-import NextTopLoader from 'nextjs-toploader';
+import NextTopLoader from "nextjs-toploader";
 import "@smastrom/react-rating/style.css";
+import "simplebar-react/dist/simplebar.min.css";
+import { SocketContextProvider } from "@/context/socketContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,15 +19,16 @@ export const metadata: Metadata = {
 };
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
-  
   return (
     <html lang="en">
       <body className={inter.className} suppressHydrationWarning={true}>
         <AppContextProvider>
-          <StyledComponentsRegistry>
-            <NextTopLoader  color="skyblue"   height={4}   showSpinner={false} />
-            <div style={{ minHeight: "500px" }}>{children}</div>
-          </StyledComponentsRegistry>
+          <SocketContextProvider>
+            <StyledComponentsRegistry>
+              <NextTopLoader color="skyblue" height={4} showSpinner={false} />
+              <div style={{ minHeight: "500px" }}>{children}</div>
+            </StyledComponentsRegistry>
+          </SocketContextProvider>
         </AppContextProvider>
         <ToastContainer />
       </body>

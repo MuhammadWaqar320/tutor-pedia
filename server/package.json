@@ -23,7 +23,8 @@
     "graphql-playground-middleware-express": "^1.7.23",
     "jsonwebtoken": "^9.0.2",
     "lodash": "^4.17.21",
-    "mongoose": "^8.0.2"
+    "mongoose": "^8.0.2",
+    "socket.io": "^4.7.5"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
